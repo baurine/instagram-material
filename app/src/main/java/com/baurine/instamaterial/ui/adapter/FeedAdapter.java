@@ -15,7 +15,8 @@ import com.baurine.instamaterial.utils.CommonUtils;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHolder> {
+public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHolder>
+        implements View.OnClickListener {
 
     private static final int ANIMATED_ITEMS_COUNT = 2;
 
@@ -25,6 +26,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
     private Context mContext;
     private int mLastAnimatedPosition = -1;
     private int mItemsCount = 0;
+
+    private OnFeedItemClickListener mListener;
 
     public FeedAdapter(Context context) {
         mContext = context;
@@ -46,6 +49,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
         }
     }
 
+    public void updateItems() {
+        updateItems(10);
+    }
+
     public void updateItems(int count) {
         mItemsCount = count;
         notifyDataSetChanged();
@@ -55,7 +62,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
     public CellFeedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(mContext).inflate(
                 R.layout.item_feed, parent, false);
-        return new CellFeedViewHolder(view);
+        CellFeedViewHolder viewHolder = new CellFeedViewHolder(view);
+        viewHolder.mIvFeedBottom.setOnClickListener(this);
+        return viewHolder;
     }
 
     @Override
@@ -63,11 +72,21 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
         runEnterAnimation(holder.itemView, position);
         holder.mSivFeedCenter.setImageResource(mFeedCenterImgs[position % 2]);
         holder.mIvFeedBottom.setImageResource(mFeedBottomImgs[position % 2]);
+        holder.mIvFeedBottom.setTag(position);
     }
 
     @Override
     public int getItemCount() {
         return mItemsCount;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.iv_feed_bottom) {
+            if (mListener != null) {
+                mListener.onCommentsClick(v, (int) (v.getTag()));
+            }
+        }
     }
 
     public static class CellFeedViewHolder extends RecyclerView.ViewHolder {
@@ -81,6 +100,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
             super(view);
             ButterKnife.inject(this, view);
         }
+    }
+
+    public void setOnFeedItemClickListener(OnFeedItemClickListener lister) {
+        mListener = lister;
+    }
+
+    public interface OnFeedItemClickListener {
+        void onCommentsClick(View v, int position);
     }
 }
 

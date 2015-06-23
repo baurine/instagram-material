@@ -2,6 +2,7 @@ package com.baurine.instamaterial.ui.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 
@@ -20,7 +22,8 @@ import com.baurine.instamaterial.utils.CommonUtils;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements FeedAdapter.OnFeedItemClickListener {
 
     private static final int ANIM_DURATION_TOOLBAR = 300;
     private static final int ANIM_DURATION_FAB = 400;
@@ -62,21 +65,8 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         mRvFeed.setLayoutManager(llm);
         mFeedAdapter = new FeedAdapter(this);
+        mFeedAdapter.setOnFeedItemClickListener(this);
         mRvFeed.setAdapter(mFeedAdapter);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        mMiInbox = menu.findItem(R.id.action_inbox);
-        mMiInbox.setActionView(R.layout.menu_item_view);
-
-        if (mPendingIntroAnimation) {
-            mPendingIntroAnimation = false;
-            startIntroAnimation();
-        }
-
-        return true;
     }
 
     private void startIntroAnimation() {
@@ -114,7 +104,21 @@ public class MainActivity extends AppCompatActivity {
                 .setStartDelay(300)
                 .setDuration(ANIM_DURATION_FAB)
                 .start();
-        mFeedAdapter.updateItems(10);
+        mFeedAdapter.updateItems();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        mMiInbox = menu.findItem(R.id.action_inbox);
+        mMiInbox.setActionView(R.layout.menu_item_view);
+
+        if (mPendingIntroAnimation) {
+            mPendingIntroAnimation = false;
+            startIntroAnimation();
+        }
+
+        return true;
     }
 
     @Override
@@ -126,5 +130,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCommentsClick(View v, int position) {
+        Intent intent = new Intent(this, CommentsActivity.class);
+
+        int[] startLoaction = new int[2];
+        v.getLocationOnScreen(startLoaction);
+        intent.putExtra(CommentsActivity.ARG_DRAWING_START_LOCATION, startLoaction[1]);
+
+        startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 }
