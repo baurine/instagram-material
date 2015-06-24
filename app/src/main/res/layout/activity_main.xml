@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_root"
     android:layout_width="match_parent"
@@ -35,7 +36,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="@dimen/fab_margins"
         android:layout_marginRight="@dimen/fab_margins"
-        android:elevation="@dimen/default_elevation"
-        android:src="@mipmap/ic_instagram_white" />
+        android:src="@mipmap/ic_instagram_white"
+        app:borderWidth="0dp" />
 
 </RelativeLayout>
