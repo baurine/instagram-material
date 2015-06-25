@@ -62,7 +62,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setupFeed() {
-        LinearLayoutManager llm = new LinearLayoutManager(this);
+        LinearLayoutManager llm = new LinearLayoutManager(this){
+            @Override
+            protected int getExtraLayoutSpace(RecyclerView.State state) {
+                return 300;
+            }
+        };
         mRvFeed.setLayoutManager(llm);
         mFeedAdapter = new FeedAdapter(this);
         mFeedAdapter.setOnFeedItemClickListener(this);
