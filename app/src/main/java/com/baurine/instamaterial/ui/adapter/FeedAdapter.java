@@ -63,10 +63,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
     public CellFeedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(mContext).inflate(
                 R.layout.item_feed, parent, false);
-        CellFeedViewHolder viewHolder = new CellFeedViewHolder(view);
-//        viewHolder.mIvFeedBottom.setOnClickListener(this);
-        viewHolder.mIbComment.setOnClickListener(this);
-        return viewHolder;
+        return new CellFeedViewHolder(view);
     }
 
     @Override
@@ -74,8 +71,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
         runEnterAnimation(holder.itemView, position);
         holder.mSivFeedCenter.setImageResource(mFeedCenterImgs[position % 2]);
         holder.mIvFeedBottom.setImageResource(mFeedBottomImgs[position % 2]);
-//        holder.mIvFeedBottom.setTag(position);
+        holder.mIbComment.setOnClickListener(this);
+        holder.mIbMore.setOnClickListener(this);
         holder.mIbComment.setTag(position);
+        holder.mIbMore.setTag(position);
     }
 
     @Override
@@ -85,9 +84,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.ib_comment) {
+        final int id = v.getId();
+        if (id == R.id.ib_comment) {
             if (mListener != null) {
                 mListener.onCommentsClick(v, (int) (v.getTag()));
+            }
+        } else if (id == R.id.ib_more) {
+            if (mListener != null) {
+                mListener.onMoreClick(v, (int) (v.getTag()));
             }
         }
     }
@@ -102,6 +106,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
         ImageButton mIbLike;
         @InjectView(R.id.ib_comment)
         ImageButton mIbComment;
+        @InjectView(R.id.ib_more)
+        ImageButton mIbMore;
 
         public CellFeedViewHolder(View view) {
             super(view);
@@ -115,6 +121,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
 
     public interface OnFeedItemClickListener {
         void onCommentsClick(View v, int position);
+
+        void onMoreClick(View v, int position);
     }
 }
 

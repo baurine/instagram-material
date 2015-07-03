@@ -46,6 +46,13 @@
                 android:layout_height="48dp"
                 android:background="@drawable/btn_feed_action"
                 android:src="@mipmap/ic_comment_outline_grey" />
+
+            <ImageButton
+                android:id="@+id/ib_more"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/btn_feed_action"
+                android:src="@mipmap/ic_more_grey" />
         </LinearLayout>
 
     </LinearLayout>
