@@ -39,6 +39,11 @@
             android:layout_weight="1"
             android:scrollbars="none" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@drawable/shadow_top" />
+
         <LinearLayout
             android:id="@+id/ll_add_comment"
             android:layout_width="match_parent"
@@ -52,12 +57,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <Button
+            <com.baurine.instamaterial.ui.view.SendCommentButton
                 android:id="@+id/btn_send_comment"
-                android:layout_width="wrap_content"
+                android:layout_width="72dp"
                 android:layout_height="wrap_content"
-                android:text="Send" />
-
+                android:background="@drawable/btn_send_comment"
+                android:elevation="4dp"
+                android:orientation="horizontal" />
         </LinearLayout>
 
     </LinearLayout>
