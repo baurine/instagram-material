@@ -20,20 +20,18 @@
         <TextView
             android:id="@+id/tv_user_comment"
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="16dp"
-            android:text="Lorem ipsum dolor sit amet"
-            android:layout_height="wrap_content" />
+            android:layout_weight="1"
+            android:text="Lorem ipsum dolor sit amet" />
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_gravity="bottom"
         android:layout_marginLeft="88dp"
-        android:background="#cccccc"
-        android:layout_gravity="bottom" />
-
-
+        android:background="#cccccc" />
 </FrameLayout>

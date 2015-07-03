@@ -56,17 +56,27 @@
             android:layout_height="wrap_content"
             android:background="@color/bg_comments"
             android:elevation="@dimen/default_elevation"
-            android:orientation="horizontal">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="8dp">
 
             <EditText
+                android:id="@+id/et_comment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textColor="#555555"
+                android:textSize="14sp" />
 
             <com.baurine.instamaterial.ui.view.SendCommentButton
                 android:id="@+id/btn_send_comment"
                 android:layout_width="72dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="8dp"
                 android:background="@drawable/btn_send_comment"
                 android:elevation="4dp"
                 android:orientation="horizontal" />

@@ -7,22 +7,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.baurine.instamaterial.R;
 import com.baurine.instamaterial.ui.adapter.CommentsAdapter;
+import com.baurine.instamaterial.ui.view.SendCommentButton;
 import com.baurine.instamaterial.utils.CommonUtils;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class CommentsActivity extends AppCompatActivity {
+public class CommentsActivity extends AppCompatActivity
+        implements SendCommentButton.OnSendClickListener {
 
     public static final String ARG_DRAWING_START_LOCATION = "draw_start_location";
 
@@ -34,8 +40,13 @@ public class CommentsActivity extends AppCompatActivity {
     RecyclerView mRvComments;
     @InjectView(R.id.ll_add_comment)
     LinearLayout mLlAddComment;
+    @InjectView(R.id.et_comment)
+    EditText mEtComment;
+    @InjectView(R.id.btn_send_comment)
+    SendCommentButton mBtnSendComment;
 
     private CommentsAdapter mCommentsAdapter;
+
     private int drawingStartLocation;
 
     @Override
@@ -47,6 +58,7 @@ public class CommentsActivity extends AppCompatActivity {
 
         setupToolbar();
         setupComments();
+        setupSendCommentButton();
 
         drawingStartLocation = getIntent().getIntExtra(ARG_DRAWING_START_LOCATION, 0);
         mLlContent.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -80,10 +92,14 @@ public class CommentsActivity extends AppCompatActivity {
         });
     }
 
+    private void setupSendCommentButton() {
+        mBtnSendComment.setOnSendClickListener(this);
+    }
+
     private void startIntroAnimation() {
         mLlContent.setScaleY(0.1f);
         mLlContent.setPivotY(drawingStartLocation);
-        mLlAddComment.setTranslationY(100);
+        mLlAddComment.setTranslationY(200);
 
         mLlContent.animate()
                 .scaleY(1)
@@ -142,11 +158,27 @@ public class CommentsActivity extends AppCompatActivity {
                 .start();
     }
 
-    @OnClick(R.id.btn_send_comment)
-    public void onSendCommentClick() {
-        mCommentsAdapter.addItem();
-        mCommentsAdapter.setAnimationLocked(false);
-        mCommentsAdapter.setDelayEnterAnimation(false);
-        mRvComments.smoothScrollBy(0, mRvComments.getChildAt(0).getHeight() * mCommentsAdapter.getItemCount());
+    @Override
+    public void onSendClick(View v) {
+        if (validateComment()) {
+            mCommentsAdapter.addItem();
+            mCommentsAdapter.setAnimationLocked(false);
+            mCommentsAdapter.setDelayEnterAnimation(false);
+            mRvComments.smoothScrollBy(0,
+                    mRvComments.getChildAt(0).getHeight() * mCommentsAdapter.getItemCount());
+
+            mEtComment.setText(null);
+            mBtnSendComment.setCurrentState(SendCommentButton.STATE_DONE);
+        }
+    }
+
+    private boolean validateComment() {
+        if (TextUtils.isEmpty(mEtComment.getText())) {
+            mBtnSendComment.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake_error));
+//            让编辑框晃动的效果也不错
+//            mEtComment.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake_error));
+            return false;
+        }
+        return true;
     }
 }
