@@ -174,9 +174,9 @@ public class CommentsActivity extends AppCompatActivity
 
     private boolean validateComment() {
         if (TextUtils.isEmpty(mEtComment.getText())) {
-            mBtnSendComment.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake_error));
+//            mBtnSendComment.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake_error));
 //            让编辑框晃动的效果也不错
-//            mEtComment.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake_error));
+            mEtComment.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake_error));
             return false;
         }
         return true;
