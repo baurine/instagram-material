@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="8dp"
@@ -44,6 +44,8 @@
                 android:id="@+id/ib_comment"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
+                android:layout_toEndOf="@id/ib_like"
+                android:layout_toRightOf="@id/ib_like"
                 android:background="@drawable/btn_feed_action"
                 android:src="@mipmap/ic_comment_outline_grey" />
 
@@ -51,9 +53,42 @@
                 android:id="@+id/ib_more"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
+                android:layout_toEndOf="@id/ib_comment"
+                android:layout_toRightOf="@id/ib_comment"
                 android:background="@drawable/btn_feed_action"
                 android:src="@mipmap/ic_more_grey" />
-        </LinearLayout>
+
+            <TextSwitcher
+                android:id="@+id/ts_like_counter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="123 likes"
+                    android:textColor="@color/text_like_counter" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_like_counter" />
+            </TextSwitcher>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/ts_like_counter"
+                android:layout_toStartOf="@id/ts_like_counter"
+                android:src="@mipmap/heart_small_blue" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 
