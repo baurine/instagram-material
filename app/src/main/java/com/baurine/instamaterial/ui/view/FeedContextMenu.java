@@ -76,7 +76,7 @@ public class FeedContextMenu extends LinearLayout {
         }
     }
 
-    public void setFeedContextMentItemListener(OnFeedContextMenuItemClickListener listener) {
+    public void setOnFeedContextMentItemListener(OnFeedContextMenuItemClickListener listener) {
         mListener = listener;
     }
 

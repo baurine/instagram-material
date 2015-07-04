@@ -17,13 +17,16 @@ import android.widget.ImageView;
 
 import com.baurine.instamaterial.R;
 import com.baurine.instamaterial.ui.adapter.FeedAdapter;
+import com.baurine.instamaterial.ui.manager.FeedContextMenuManager;
+import com.baurine.instamaterial.ui.view.FeedContextMenu;
 import com.baurine.instamaterial.utils.CommonUtils;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class MainActivity extends AppCompatActivity
-        implements FeedAdapter.OnFeedItemClickListener {
+        implements FeedAdapter.OnFeedItemClickListener,
+        FeedContextMenu.OnFeedContextMenuItemClickListener {
 
     private static final int ANIM_DURATION_TOOLBAR = 300;
     private static final int ANIM_DURATION_FAB = 400;
@@ -62,7 +65,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setupFeed() {
-        LinearLayoutManager llm = new LinearLayoutManager(this){
+        LinearLayoutManager llm = new LinearLayoutManager(this) {
             @Override
             protected int getExtraLayoutSpace(RecyclerView.State state) {
                 return 300;
@@ -72,6 +75,13 @@ public class MainActivity extends AppCompatActivity
         mFeedAdapter = new FeedAdapter(this);
         mFeedAdapter.setOnFeedItemClickListener(this);
         mRvFeed.setAdapter(mFeedAdapter);
+
+        mRvFeed.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                FeedContextMenuManager.getInstance().onScrolled(recyclerView, dx, dy);
+            }
+        });
     }
 
     private void startIntroAnimation() {
@@ -141,9 +151,9 @@ public class MainActivity extends AppCompatActivity
     public void onCommentsClick(View v, int position) {
         Intent intent = new Intent(this, CommentsActivity.class);
 
-        int[] startLoaction = new int[2];
-        v.getLocationOnScreen(startLoaction);
-        intent.putExtra(CommentsActivity.ARG_DRAWING_START_LOCATION, startLoaction[1]);
+        int[] startLocation = new int[2];
+        v.getLocationOnScreen(startLocation);
+        intent.putExtra(CommentsActivity.ARG_DRAWING_START_LOCATION, startLocation[1]);
 
         startActivity(intent);
         overridePendingTransition(0, 0);
@@ -151,6 +161,26 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onMoreClick(View v, int position) {
+        FeedContextMenuManager.getInstance().toogleContextMenuFromView(v, position, this);
+    }
 
+    @Override
+    public void onReportClick(int feedItem) {
+        FeedContextMenuManager.getInstance().hideContextMenu();
+    }
+
+    @Override
+    public void onSharePhototClick(int feedItem) {
+        FeedContextMenuManager.getInstance().hideContextMenu();
+    }
+
+    @Override
+    public void onCopyShareUrlClick(int feedItem) {
+        FeedContextMenuManager.getInstance().hideContextMenu();
+    }
+
+    @Override
+    public void onCancelClick(int feedItem) {
+        FeedContextMenuManager.getInstance().hideContextMenu();
     }
 }
