@@ -1,11 +1,17 @@
 package com.baurine.instamaterial.ui.adapter;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextSwitcher;
@@ -26,6 +32,11 @@ import butterknife.InjectView;
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHolder>
         implements View.OnClickListener {
 
+    private static final AccelerateInterpolator ACCELERATE_INTERPOLATOR =
+            new AccelerateInterpolator();
+    private static final OvershootInterpolator OVERSHOOT_INTERPOLATOR =
+            new OvershootInterpolator(4);
+
     private static final int ANIMATED_ITEMS_COUNT = 2;
 
     private int[] mFeedCenterImgs = {R.mipmap.img_feed_center_1, R.mipmap.img_feed_center_2};
@@ -39,6 +50,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
 
     private final Map<Integer, Integer> mLikesCount = new HashMap<>();
     private final Set<Integer> mLikedPosition = new HashSet<>();
+    private final Map<CellFeedViewHolder, AnimatorSet> mLikedAnimation = new HashMap<>();
 
     public FeedAdapter(Context context) {
         mContext = context;
@@ -99,6 +111,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
 
         holder.mIbMore.setOnClickListener(this);
         holder.mIbMore.setTag(position);
+
+        if (mLikedAnimation.containsKey(holder)) {
+            mLikedAnimation.get(holder).cancel();
+        }
+        resetLikedAnimation(holder);
     }
 
     @Override
@@ -146,12 +163,57 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
         mLikesCount.put(holder.getAdapterPosition(), curLikesCount);
     }
 
-    private void updateLikeButton(CellFeedViewHolder holder, boolean animate) {
+    private void updateLikeButton(final CellFeedViewHolder holder, boolean animate) {
         if (mLikedPosition.contains(holder.getAdapterPosition())) {
-            holder.mIbLike.setImageResource(R.mipmap.heart_red);
+            if (animate) {
+                if (mLikedAnimation.containsKey(holder)) {
+                    return;
+                }
+                AnimatorSet animatorSet = new AnimatorSet();
+                mLikedAnimation.put(holder, animatorSet);
+                holder.mIbLike.setEnabled(false);
+
+                ObjectAnimator rotationAnim = ObjectAnimator.ofFloat(holder.mIbLike,
+                        "rotation", 0f, 360f);
+                rotationAnim.setDuration(300);
+                rotationAnim.setInterpolator(ACCELERATE_INTERPOLATOR);
+
+                ObjectAnimator bounceAnimX = ObjectAnimator.ofFloat(holder.mIbLike,
+                        "scaleX", 0.2f, 1.0f);
+                bounceAnimX.setDuration(300);
+                bounceAnimX.setInterpolator(OVERSHOOT_INTERPOLATOR);
+
+                ObjectAnimator bounceAnimY = ObjectAnimator.ofFloat(holder.mIbLike,
+                        "scaleY", 0.2f, 1.0f);
+                bounceAnimY.setDuration(300);
+                bounceAnimY.setInterpolator(OVERSHOOT_INTERPOLATOR);
+                bounceAnimY.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        holder.mIbLike.setImageResource(R.mipmap.heart_red);
+                    }
+                });
+
+                animatorSet.play(rotationAnim);
+                animatorSet.play(bounceAnimX).with(bounceAnimY).after(rotationAnim);
+                animatorSet.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        resetLikedAnimation(holder);
+                    }
+                });
+                animatorSet.start();
+            } else {
+                holder.mIbLike.setImageResource(R.mipmap.heart_red);
+            }
         } else {
             holder.mIbLike.setImageResource(R.mipmap.ic_heart_outline_grey);
         }
+    }
+
+    private void resetLikedAnimation(CellFeedViewHolder holder) {
+        mLikedAnimation.remove(holder);
+        holder.mIbLike.setEnabled(true);
     }
 
     public static class CellFeedViewHolder extends RecyclerView.ViewHolder {
