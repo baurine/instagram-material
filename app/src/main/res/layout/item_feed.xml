@@ -59,14 +59,16 @@
                 android:src="@mipmap/ic_more_grey" />
 
             <TextSwitcher
-                android:id="@+id/ts_like_counter"
+                android:id="@+id/ts_likes_counter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp">
+                android:layout_marginRight="8dp"
+                android:inAnimation="@anim/slide_in_likes_counter"
+                android:outAnimation="@anim/slide_out_likes_counter">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -84,8 +86,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/ts_like_counter"
-                android:layout_toStartOf="@id/ts_like_counter"
+                android:layout_toLeftOf="@id/ts_likes_counter"
+                android:layout_toStartOf="@id/ts_likes_counter"
                 android:src="@mipmap/heart_small_blue" />
 
         </RelativeLayout>

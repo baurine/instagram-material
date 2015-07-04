@@ -2,16 +2,22 @@ package com.baurine.instamaterial.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextSwitcher;
 
 import com.baurine.instamaterial.R;
 import com.baurine.instamaterial.ui.view.SquareImageView;
 import com.baurine.instamaterial.utils.CommonUtils;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -29,6 +35,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
     private int mItemsCount = 0;
 
     private OnFeedItemClickListener mListener;
+
+    private final Map<Integer, Integer> mLikesCount = new HashMap<>();
 
     public FeedAdapter(Context context) {
         mContext = context;
@@ -56,7 +64,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
 
     public void updateItems(int count) {
         mItemsCount = count;
+        fillLikesWithRandomValues();
         notifyDataSetChanged();
+    }
+
+    private void fillLikesWithRandomValues() {
+        for (int i = 0; i < mItemsCount; i++) {
+            mLikesCount.put(i, new Random().nextInt(100));
+        }
     }
 
     @Override
@@ -71,6 +86,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
         runEnterAnimation(holder.itemView, position);
         holder.mSivFeedCenter.setImageResource(mFeedCenterImgs[position % 2]);
         holder.mIvFeedBottom.setImageResource(mFeedBottomImgs[position % 2]);
+        updateLikesCounter(holder, false);
+
         holder.mIbComment.setOnClickListener(this);
         holder.mIbMore.setOnClickListener(this);
         holder.mIbComment.setTag(position);
@@ -80,6 +97,19 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
     @Override
     public int getItemCount() {
         return mItemsCount;
+    }
+
+    private void updateLikesCounter(CellFeedViewHolder holder, boolean animate) {
+        int curLikesCount = mLikesCount.get(holder.getAdapterPosition()) + 1;
+        String likesCountText = mContext.getResources().getQuantityString(
+                R.plurals.likes_count, curLikesCount, curLikesCount);
+        if (animate) {
+            holder.mTsLikesCounter.setText(likesCountText);
+        } else {
+            holder.mTsLikesCounter.setCurrentText(likesCountText);
+        }
+
+        mLikesCount.put(holder.getAdapterPosition(), curLikesCount);
     }
 
     @Override
@@ -108,6 +138,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
         ImageButton mIbComment;
         @InjectView(R.id.ib_more)
         ImageButton mIbMore;
+        @InjectView(R.id.ts_likes_counter)
+        TextSwitcher mTsLikesCounter;
 
         public CellFeedViewHolder(View view) {
             super(view);
