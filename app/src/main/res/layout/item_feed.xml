@@ -17,10 +17,29 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_feed_top" />
 
-        <com.baurine.instamaterial.ui.view.SquareImageView
-            android:id="@+id/siv_feed_center"
+        <com.baurine.instamaterial.ui.view.SquareFrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_feed_center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <View
+                android:id="@+id/v_bg_like"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_like_circle" />
+
+            <ImageView
+                android:id="@+id/iv_like"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="center"
+                android:src="@mipmap/heart_outline_white" />
+
+        </com.baurine.instamaterial.ui.view.SquareFrameLayout>
 
         <ImageView
             android:id="@+id/iv_feed_bottom"

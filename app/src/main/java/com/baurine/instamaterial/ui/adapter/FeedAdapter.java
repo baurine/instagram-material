@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextSwitcher;
 
 import com.baurine.instamaterial.R;
-import com.baurine.instamaterial.ui.view.SquareImageView;
 import com.baurine.instamaterial.utils.CommonUtils;
 
 import java.util.HashMap;
@@ -36,6 +35,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
             new AccelerateInterpolator();
     private static final OvershootInterpolator OVERSHOOT_INTERPOLATOR =
             new OvershootInterpolator(4);
+    private static final DecelerateInterpolator DECELERATE_INTERPOLATOR =
+            new DecelerateInterpolator();
 
     private static final int ANIMATED_ITEMS_COUNT = 2;
 
@@ -98,8 +99,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
     @Override
     public void onBindViewHolder(CellFeedViewHolder holder, int position) {
         runEnterAnimation(holder.itemView, position);
-        holder.mSivFeedCenter.setImageResource(mFeedCenterImgs[position % 2]);
+        holder.mIvFeedCenter.setImageResource(mFeedCenterImgs[position % 2]);
         holder.mIvFeedBottom.setImageResource(mFeedBottomImgs[position % 2]);
+
+        holder.mIvFeedCenter.setOnClickListener(this);
+        holder.mIvFeedCenter.setTag(holder);
+
         updateLikesCounter(holder, 0, false);
         updateLikeButton(holder, false);
 
@@ -147,6 +152,15 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
             }
             updateLikeButton(holder, true);
             updateLikesCounter(holder, delta, true);
+        } else if (id == R.id.iv_feed_center) {
+            CellFeedViewHolder holder = (CellFeedViewHolder) v.getTag();
+            int position = holder.getAdapterPosition();
+            if (!mLikedPosition.contains(position)) {
+                mLikedPosition.add(position);
+                animatePhotoLike(holder);
+                updateLikeButton(holder, false);
+                updateLikesCounter(holder, 1, true);
+            }
         }
     }
 
@@ -211,15 +225,81 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
         }
     }
 
+    private void animatePhotoLike(final CellFeedViewHolder holder) {
+        if (!mLikedAnimation.containsKey(holder)) {
+            holder.mVBgLike.setVisibility(View.VISIBLE);
+            holder.mIvLike.setVisibility(View.VISIBLE);
+
+            holder.mVBgLike.setScaleX(0.1f);
+            holder.mVBgLike.setScaleY(0.1f);
+            holder.mVBgLike.setAlpha(1f);
+            holder.mIvLike.setScaleX(0.1f);
+            holder.mIvLike.setScaleY(0.1f);
+
+            AnimatorSet animatorSet = new AnimatorSet();
+            mLikedAnimation.put(holder, animatorSet);
+
+            ObjectAnimator bgScaleXAnim = ObjectAnimator.ofFloat(holder.mVBgLike,
+                    "scaleX", 0.1f, 1f);
+            bgScaleXAnim.setDuration(200);
+            bgScaleXAnim.setInterpolator(DECELERATE_INTERPOLATOR);
+            ObjectAnimator bgScaleYAnim = ObjectAnimator.ofFloat(holder.mVBgLike,
+                    "scaleY", 0.1f, 1f);
+            bgScaleYAnim.setDuration(200);
+            bgScaleYAnim.setInterpolator(DECELERATE_INTERPOLATOR);
+            ObjectAnimator bgAlphaAnim = ObjectAnimator.ofFloat(holder.mVBgLike,
+                    "alpha", 1f, 0f);
+            bgAlphaAnim.setDuration(200);
+            bgAlphaAnim.setStartDelay(150);
+            bgAlphaAnim.setInterpolator(DECELERATE_INTERPOLATOR);
+
+            ObjectAnimator imgScaleUpXAnim = ObjectAnimator.ofFloat(holder.mIvLike,
+                    "scaleX", 0.1f, 1f);
+            imgScaleUpXAnim.setDuration(300);
+            imgScaleUpXAnim.setInterpolator(DECELERATE_INTERPOLATOR);
+            ObjectAnimator imgScaleUpYAnim = ObjectAnimator.ofFloat(holder.mIvLike,
+                    "scaleY", 0.1f, 1f);
+            imgScaleUpYAnim.setDuration(300);
+            imgScaleUpYAnim.setInterpolator(DECELERATE_INTERPOLATOR);
+
+            ObjectAnimator imgScaleDownXAnim = ObjectAnimator.ofFloat(holder.mIvLike,
+                    "scaleX", 1f, 0f);
+            imgScaleDownXAnim.setDuration(300);
+            imgScaleDownXAnim.setInterpolator(DECELERATE_INTERPOLATOR);
+            ObjectAnimator imgScaleDownYAnim = ObjectAnimator.ofFloat(holder.mIvLike,
+                    "scaleY", 1f, 0f);
+            imgScaleDownYAnim.setDuration(300);
+            imgScaleDownYAnim.setInterpolator(DECELERATE_INTERPOLATOR);
+
+            animatorSet.playTogether(bgScaleXAnim, bgScaleYAnim, bgAlphaAnim,
+                    imgScaleUpXAnim, imgScaleUpYAnim);
+            animatorSet.play(imgScaleDownXAnim).with(imgScaleDownYAnim).after(imgScaleUpXAnim);
+            animatorSet.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    resetLikedAnimation(holder);
+                }
+            });
+            animatorSet.start();
+        }
+    }
+
     private void resetLikedAnimation(CellFeedViewHolder holder) {
         mLikedAnimation.remove(holder);
         holder.mIbLike.setEnabled(true);
+
+        holder.mVBgLike.setVisibility(View.GONE);
+        holder.mIvLike.setVisibility(View.GONE);
     }
 
     public static class CellFeedViewHolder extends RecyclerView.ViewHolder {
 
-        @InjectView(R.id.siv_feed_center)
-        SquareImageView mSivFeedCenter;
+        @InjectView(R.id.iv_feed_center)
+        ImageView mIvFeedCenter;
+        @InjectView(R.id.v_bg_like)
+        View mVBgLike;
+        @InjectView(R.id.iv_like)
+        ImageView mIvLike;
         @InjectView(R.id.iv_feed_bottom)
         ImageView mIvFeedBottom;
         @InjectView(R.id.ib_like)
