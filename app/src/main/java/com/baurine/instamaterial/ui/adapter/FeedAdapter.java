@@ -2,7 +2,6 @@ package com.baurine.instamaterial.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +15,10 @@ import com.baurine.instamaterial.ui.view.SquareImageView;
 import com.baurine.instamaterial.utils.CommonUtils;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -37,6 +38,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
     private OnFeedItemClickListener mListener;
 
     private final Map<Integer, Integer> mLikesCount = new HashMap<>();
+    private final Set<Integer> mLikedPosition = new HashSet<>();
 
     public FeedAdapter(Context context) {
         mContext = context;
@@ -86,30 +88,22 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
         runEnterAnimation(holder.itemView, position);
         holder.mSivFeedCenter.setImageResource(mFeedCenterImgs[position % 2]);
         holder.mIvFeedBottom.setImageResource(mFeedBottomImgs[position % 2]);
-        updateLikesCounter(holder, false);
+        updateLikesCounter(holder, 0, false);
+        updateLikeButton(holder, false);
+
+        holder.mIbLike.setOnClickListener(this);
+        holder.mIbLike.setTag(holder);
 
         holder.mIbComment.setOnClickListener(this);
-        holder.mIbMore.setOnClickListener(this);
         holder.mIbComment.setTag(position);
+
+        holder.mIbMore.setOnClickListener(this);
         holder.mIbMore.setTag(position);
     }
 
     @Override
     public int getItemCount() {
         return mItemsCount;
-    }
-
-    private void updateLikesCounter(CellFeedViewHolder holder, boolean animate) {
-        int curLikesCount = mLikesCount.get(holder.getAdapterPosition()) + 1;
-        String likesCountText = mContext.getResources().getQuantityString(
-                R.plurals.likes_count, curLikesCount, curLikesCount);
-        if (animate) {
-            holder.mTsLikesCounter.setText(likesCountText);
-        } else {
-            holder.mTsLikesCounter.setCurrentText(likesCountText);
-        }
-
-        mLikesCount.put(holder.getAdapterPosition(), curLikesCount);
     }
 
     @Override
@@ -123,6 +117,40 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
             if (mListener != null) {
                 mListener.onMoreClick(v, (int) (v.getTag()));
             }
+        } else if (id == R.id.ib_like) {
+            CellFeedViewHolder holder = (CellFeedViewHolder) v.getTag();
+            int position = holder.getAdapterPosition();
+            int delta;
+            if (!mLikedPosition.contains(position)) {
+                mLikedPosition.add(position);
+                delta = 1;
+            } else {
+                mLikedPosition.remove(position);
+                delta = -1;
+            }
+            updateLikeButton(holder, true);
+            updateLikesCounter(holder, delta, true);
+        }
+    }
+
+    private void updateLikesCounter(CellFeedViewHolder holder, int deltaValue, boolean animate) {
+        int curLikesCount = mLikesCount.get(holder.getAdapterPosition()) + deltaValue;
+        String likesCountText = mContext.getResources().getQuantityString(
+                R.plurals.likes_count, curLikesCount, curLikesCount);
+        if (animate) {
+            holder.mTsLikesCounter.setText(likesCountText);
+        } else {
+            holder.mTsLikesCounter.setCurrentText(likesCountText);
+        }
+
+        mLikesCount.put(holder.getAdapterPosition(), curLikesCount);
+    }
+
+    private void updateLikeButton(CellFeedViewHolder holder, boolean animate) {
+        if (mLikedPosition.contains(holder.getAdapterPosition())) {
+            holder.mIbLike.setImageResource(R.mipmap.heart_red);
+        } else {
+            holder.mIbLike.setImageResource(R.mipmap.ic_heart_outline_grey);
         }
     }
 
