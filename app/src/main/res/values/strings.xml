@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="TypographyDashes">
     <string name="app_name">InstaMaterial</string>
 
     <string name="hello_world">Hello world!</string>
@@ -8,4 +8,21 @@
         <item quantity="one">%d like</item>
         <item quantity="other">%d likes</item>
     </plurals>
+
+    <string name="user_profile_photo">http://img.hb.aicdn.com/6a48943a16d49ea7f2080baa44caad96b6d037e04e223-04ooz1_fw658</string>
+    <string-array name="user_photos">
+        <item>http://img.hb.aicdn.com/c33db45c1edcab58c5465e83122ab01b70d8a3ed46bfa-5twuxr_fw658</item>
+        <item>http://img.hb.aicdn.com/505d9a1ca9a6eec8402e6563279b1a3bdd0428f3358be-U5cwtd_fw658</item>
+        <item>http://img.hb.aicdn.com/781892374db0fee457bcdbcd409a3be66fc06c3d4be2f-UzCorj_fw658</item>
+        <item>http://img.hb.aicdn.com/99d4a9c0693b3eff56a116e6c77fcbe88adc2134535c6-tSRUW9_fw658</item>
+        <item>http://img.hb.aicdn.com/09200594473a43e7b9772576c8191deaec1497c619829-NBhDWl_fw658</item>
+        <item>http://img.hb.aicdn.com/e52c95dac7f5fa1d538f9032da28d3b65f0eedd7929d2-nRI9rw_fw658</item>
+        <item>http://img.hb.aicdn.com/2d03a098cea357febf44912909f3c717d1ef32ba14c7e-8KW408_fw658</item>
+        <item>http://img.hb.aicdn.com/1d5ebdc0c15cdbae263160f760f137ba1188e29922afa-pWXF70_fw658</item>
+        <item>http://img.hb.aicdn.com/64250c440bd45860c05d4f1b8c4a422622d0a2b619858-pNy9ad_fw658</item>
+        <item>http://img.hb.aicdn.com/9b5d059b025d52187a3448c184949ae03cb2603c2ba1c-Ad7Ysa_fw658</item>
+        <item>http://img.hb.aicdn.com/6c4fafb8e2cb19281ee8c898ba973db0b4091f97cf16-T3pio3_fw658</item>
+        <item>http://img.hb.aicdn.com/d58da70647084b273a751cd915d8385d481b5fe79626-mgE5dT_fw658</item>
+        <item>http://img.hb.aicdn.com/ecf1b1aae04cb71b468d3e15bd91228d6d013ac943059-ZvAIzM_fw658</item>
+    </string-array>
 </resources>

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 
 import com.baurine.instamaterial.R;
+import com.baurine.instamaterial.ui.adapter.UserProfileAdapter;
 import com.baurine.instamaterial.ui.view.RevealBackgroundView;
 
 import butterknife.InjectView;
@@ -73,7 +74,8 @@ public class UserProfileActivity extends BaseActivity
     public void onStateChange(int state) {
         if (state == RevealBackgroundView.STATE_FINISHED) {
             mRvUserProfile.setVisibility(View.VISIBLE);
-            // TODO: set UserPhotosAdapter
+            UserProfileAdapter adapter = new UserProfileAdapter(this);
+            mRvUserProfile.setAdapter(adapter);
         } else {
             mRvUserProfile.setVisibility(View.INVISIBLE);
         }
