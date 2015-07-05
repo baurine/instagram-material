@@ -10,11 +10,15 @@
         android:id="@+id/tl_toolbar"
         layout="@layout/view_feed_toolbar" />
 
+    <com.baurine.instamaterial.ui.view.RevealBackgroundView
+        android:id="@+id/rbv_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_user_profile"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
         android:paddingTop="?attr/actionBarSize" />
 
     <android.support.design.widget.FloatingActionButton
