@@ -238,6 +238,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
 
             AnimatorSet animatorSet = new AnimatorSet();
             mLikedAnimation.put(holder, animatorSet);
+            holder.mIbLike.setEnabled(false);
 
             ObjectAnimator bgScaleXAnim = ObjectAnimator.ofFloat(holder.mVBgLike,
                     "scaleX", 0.1f, 1f);
