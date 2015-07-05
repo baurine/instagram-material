@@ -130,6 +130,11 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
+    public void onUserProfileClick(View v, int position) {
+
+    }
+
+    @Override
     public void onCommentsClick(View v, int position) {
         Intent intent = new Intent(this, CommentsActivity.class);
 

@@ -93,7 +93,15 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
     public CellFeedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(mContext).inflate(
                 R.layout.item_feed, parent, false);
-        return new CellFeedViewHolder(view);
+
+        CellFeedViewHolder holder = new CellFeedViewHolder(view);
+        holder.mIvUserProfile.setOnClickListener(this);
+        holder.mIvFeedCenter.setOnClickListener(this);
+        holder.mIbLike.setOnClickListener(this);
+        holder.mIbComment.setOnClickListener(this);
+        holder.mIbMore.setOnClickListener(this);
+
+        return holder;
     }
 
     @Override
@@ -102,20 +110,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
         holder.mIvFeedCenter.setImageResource(mFeedCenterImgs[position % 2]);
         holder.mIvFeedBottom.setImageResource(mFeedBottomImgs[position % 2]);
 
-        holder.mIvFeedCenter.setOnClickListener(this);
+        holder.mIvUserProfile.setTag(position);
         holder.mIvFeedCenter.setTag(holder);
+        holder.mIbLike.setTag(holder);
+        holder.mIbComment.setTag(position);
+        holder.mIbMore.setTag(position);
 
         updateLikesCounter(holder, 0, false);
         updateLikeButton(holder, false);
-
-        holder.mIbLike.setOnClickListener(this);
-        holder.mIbLike.setTag(holder);
-
-        holder.mIbComment.setOnClickListener(this);
-        holder.mIbComment.setTag(position);
-
-        holder.mIbMore.setOnClickListener(this);
-        holder.mIbMore.setTag(position);
 
         if (mLikedAnimation.containsKey(holder)) {
             mLikedAnimation.get(holder).cancel();
@@ -131,7 +133,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
     @Override
     public void onClick(View v) {
         final int id = v.getId();
-        if (id == R.id.ib_comment) {
+        if (id == R.id.iv_user_profile) {
+            if (mListener != null) {
+                mListener.onUserProfileClick(v, (int) (v.getTag()));
+            }
+        } else if (id == R.id.ib_comment) {
             if (mListener != null) {
                 mListener.onCommentsClick(v, (int) (v.getTag()));
             }
@@ -306,6 +312,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
 
     public static class CellFeedViewHolder extends RecyclerView.ViewHolder {
 
+        @InjectView(R.id.iv_user_profile)
+        ImageView mIvUserProfile;
         @InjectView(R.id.iv_feed_center)
         ImageView mIvFeedCenter;
         @InjectView(R.id.v_bg_like)
@@ -334,6 +342,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
     }
 
     public interface OnFeedItemClickListener {
+        void onUserProfileClick(View v, int position);
+
         void onCommentsClick(View v, int position);
 
         void onMoreClick(View v, int position);
