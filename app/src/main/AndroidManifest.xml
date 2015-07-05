@@ -19,7 +19,11 @@
         <activity
             android:name=".ui.activity.CommentsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.CommentsActivity" />
+            android:theme="@style/AppTheme.TransparentActivity" />
+        <activity
+            android:name=".ui.activity.UserProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.TransparentActivity" />
     </application>
 
 </manifest>
