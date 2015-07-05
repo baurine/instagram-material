@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity
     private void startContentAnimation() {
         mFabCreate.animate()
                 .translationY(0)
-                .setInterpolator(new OvershootInterpolator(1.f))
+                .setInterpolator(new OvershootInterpolator(1f))
                 .setStartDelay(300)
                 .setDuration(ANIM_DURATION_FAB)
                 .start();

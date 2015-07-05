@@ -22,7 +22,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private Context mContext;
     private int mAvatarSize;
     private int mItemsCount = 0;
-    private int mLastAnimatedPostion = -1;
+    private int mLastAnimatedPosition = -1;
     private boolean mAnimationLocked = false;
     private boolean mDelayEnterAnimation = true;
 
@@ -84,8 +84,8 @@ public class CommentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return;
         }
 
-        if (position > mLastAnimatedPostion) {
-            mLastAnimatedPostion = position;
+        if (position > mLastAnimatedPosition) {
+            mLastAnimatedPosition = position;
             itemView.setTranslationY(100);
             itemView.setAlpha(0.0f);
             itemView.animate()
