@@ -2,7 +2,6 @@ package com.baurine.instamaterial.ui.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -140,13 +139,9 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void onCommentsClick(View v, int position) {
-        Intent intent = new Intent(this, CommentsActivity.class);
-
         int[] startLocation = new int[2];
         v.getLocationOnScreen(startLocation);
-        intent.putExtra(CommentsActivity.ARG_DRAWING_START_LOCATION, startLocation[1]);
-
-        startActivity(intent);
+        CommentsActivity.startCommentsFromLocation(startLocation[1], this);
         overridePendingTransition(0, 0);
     }
 

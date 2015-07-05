@@ -1,7 +1,6 @@
 package com.baurine.instamaterial.ui.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +16,7 @@ import butterknife.InjectView;
 
 public class UserProfileActivity extends BaseActivity
         implements RevealBackgroundView.OnStateChangeListener {
-    public static final String ARG_REVEAL_START_LOCATION = "reveal_start_location";
+    private static final String ARG_REVEAL_START_LOCATION = "reveal_start_location";
 
     @InjectView(R.id.rbv_background)
     RevealBackgroundView mRbvBackground;

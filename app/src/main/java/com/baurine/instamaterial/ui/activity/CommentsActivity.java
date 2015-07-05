@@ -2,6 +2,8 @@ package com.baurine.instamaterial.ui.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,7 +28,7 @@ import butterknife.InjectView;
 public class CommentsActivity extends BaseActivity
         implements SendCommentButton.OnSendClickListener {
 
-    public static final String ARG_DRAWING_START_LOCATION = "draw_start_location";
+    private static final String ARG_DRAWING_START_LOCATION = "draw_start_location";
 
     @InjectView(R.id.ll_content)
     LinearLayout mLlContent;
@@ -42,6 +44,12 @@ public class CommentsActivity extends BaseActivity
     private CommentsAdapter mCommentsAdapter;
 
     private int drawingStartLocation;
+
+    public static void startCommentsFromLocation(int location, Activity startingActivity) {
+        Intent intent = new Intent(startingActivity, CommentsActivity.class);
+        intent.putExtra(ARG_DRAWING_START_LOCATION, location);
+        startingActivity.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
