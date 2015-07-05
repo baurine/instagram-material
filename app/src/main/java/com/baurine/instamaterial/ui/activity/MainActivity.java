@@ -131,7 +131,11 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void onUserProfileClick(View v, int position) {
-
+        int[] startLocation = new int[2];
+        v.getLocationOnScreen(startLocation);
+        startLocation[0] += v.getWidth() / 2;
+        UserProfileActivity.startUserProfileFromLocation(startLocation, this);
+        overridePendingTransition(0, 0);
     }
 
     @Override

@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <include
-        android:id="@+id/tl_toolbar"
-        layout="@layout/view_feed_toolbar" />
-
     <com.baurine.instamaterial.ui.view.RevealBackgroundView
         android:id="@+id/rbv_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <include
+        android:id="@+id/tl_toolbar"
+        layout="@layout/view_feed_toolbar" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_user_profile"

@@ -16,9 +16,9 @@ import android.view.animation.Interpolator;
 
 public class RevealBackgroundView extends View {
 
-    private static final int STATE_NOT_STARTED = 0;
-    private static final int STATE_FILL_STARTED = 1;
-    private static final int STATE_FINISHED = 2;
+    public static final int STATE_NOT_STARTED = 0;
+    public static final int STATE_FILL_STARTED = 1;
+    public static final int STATE_FINISHED = 2;
 
     private static final Interpolator INTERPOLATOR = new AccelerateInterpolator();
     private static final int FILL_TIME = 400;
@@ -58,6 +58,13 @@ public class RevealBackgroundView extends View {
         mFillPaint = new Paint();
         mFillPaint.setStyle(Paint.Style.FILL);
         mFillPaint.setColor(Color.WHITE);
+    }
+
+    // 这个方法很重要，没有这个方法，
+    // ObjectAnimator.ofInt(this, "mCurRadius", 0, getWidth() + getHeight()) 不能正常工作
+    public void setMCurRadius(int radius) {
+        mCurRadius = radius;
+        invalidate();
     }
 
     public void startFromLocation(int[] tapLocationOnScreen) {
