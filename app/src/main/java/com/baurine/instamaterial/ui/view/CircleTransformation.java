@@ -3,11 +3,14 @@ package com.baurine.instamaterial.ui.view;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 
 import com.squareup.picasso.Transformation;
 
-public class RoundedTransformation implements Transformation {
+public class CircleTransformation implements Transformation {
+
+    private static final int STROKE_WIDTH = 6;
 
     @Override
     public Bitmap transform(Bitmap source) {
@@ -25,12 +28,18 @@ public class RoundedTransformation implements Transformation {
 
         Canvas canvas = new Canvas(bitmap);
         BitmapShader shader = new BitmapShader(squaredBitmap, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP);
-        Paint paint = new Paint();
-        paint.setShader(shader);
-        paint.setAntiAlias(true);
+        Paint avatarPaint = new Paint();
+        avatarPaint.setShader(shader);
+
+        Paint outlinePaint = new Paint();
+        outlinePaint.setColor(Color.WHITE);
+        outlinePaint.setStyle(Paint.Style.STROKE);
+        outlinePaint.setStrokeWidth(STROKE_WIDTH);
+        outlinePaint.setAntiAlias(true);
 
         float r = size / 2f;
-        canvas.drawCircle(r, r, r, paint);
+        canvas.drawCircle(r, r, r, avatarPaint);
+        canvas.drawCircle(r, r, r - STROKE_WIDTH / 2, outlinePaint);
 
         squaredBitmap.recycle();
         return bitmap;
@@ -38,7 +47,7 @@ public class RoundedTransformation implements Transformation {
 
     @Override
     public String key() {
-        return "rounded";
+        return "circle";
     }
 
 }
