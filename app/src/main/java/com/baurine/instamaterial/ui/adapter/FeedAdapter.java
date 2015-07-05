@@ -169,6 +169,17 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
         String likesCountText = mContext.getResources().getQuantityString(
                 R.plurals.likes_count, curLikesCount, curLikesCount);
         if (animate) {
+            if (deltaValue > 0) {
+                holder.mTsLikesCounter.setInAnimation(holder.mTsLikesCounter.getContext(),
+                        R.anim.slide_in_likes_counter_add);
+                holder.mTsLikesCounter.setOutAnimation(holder.mTsLikesCounter.getContext(),
+                        R.anim.slide_out_likes_counter_add);
+            } else if (deltaValue < 0) {
+                holder.mTsLikesCounter.setInAnimation(holder.mTsLikesCounter.getContext(),
+                        R.anim.slide_in_likes_counter_sub);
+                holder.mTsLikesCounter.setOutAnimation(holder.mTsLikesCounter.getContext(),
+                        R.anim.slide_out_likes_counter_sub);
+            }
             holder.mTsLikesCounter.setText(likesCountText);
         } else {
             holder.mTsLikesCounter.setCurrentText(likesCountText);

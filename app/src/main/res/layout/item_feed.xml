@@ -85,9 +85,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:inAnimation="@anim/slide_in_likes_counter"
-                android:outAnimation="@anim/slide_out_likes_counter">
+                android:layout_marginRight="8dp">
 
                 <TextView
                     android:layout_width="wrap_content"
