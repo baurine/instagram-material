@@ -8,4 +8,5 @@
     <dimen name="default_elevation">8dp</dimen>
 
     <dimen name="comment_avatar_size">56dp</dimen>
+    <dimen name="user_profile_avatar_size">88dp</dimen>
 </resources>
