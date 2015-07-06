@@ -34,6 +34,7 @@ public class UserProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private static final int MIN_ITEMS_COUNT = 2;
 
     private static final Interpolator INTERPOLATOR = new DecelerateInterpolator();
+    private static final int PROFILE_OPTIONS_ANIMATION_DELAY = 300;
 
     private final Context mContext;
     private final int mCellSize;
@@ -181,7 +182,17 @@ public class UserProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     private void animateProfileOptions(ProfileOptionsViewHolder holder) {
+        if (!mLockedAnimation) {
+            holder.mLlButtons.setTranslationY(-holder.mLlButtons.getHeight());
+            holder.mVUnderline.setScaleX(0f);
 
+            holder.mLlButtons.animate().translationY(0).setDuration(300)
+                    .setStartDelay(PROFILE_OPTIONS_ANIMATION_DELAY)
+                    .setInterpolator(INTERPOLATOR);
+            holder.mVUnderline.animate().scaleX(1f).setDuration(200)
+                    .setStartDelay(PROFILE_OPTIONS_ANIMATION_DELAY + 300)
+                    .setInterpolator(INTERPOLATOR).start();
+        }
     }
 
     private void animatePhoto(PhotoViewHolder holder) {
