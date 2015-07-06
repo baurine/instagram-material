@@ -23,6 +23,8 @@ public class UserProfileActivity extends BaseActivity
     @InjectView(R.id.rv_user_profile)
     RecyclerView mRvUserProfile;
 
+    private UserProfileAdapter mUserProfileAdapter;
+
     public static void startUserProfileFromLocation(int[] startLocation, Activity startingActivity) {
         Intent intent = new Intent(startingActivity, UserProfileActivity.class);
         intent.putExtra(ARG_REVEAL_START_LOCATION, startLocation);
@@ -45,7 +47,7 @@ public class UserProfileActivity extends BaseActivity
         mRvUserProfile.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                // TODO: lock UserPhotosAdapter animation
+                mUserProfileAdapter.setLockedAnimation(true);
             }
         });
     }
@@ -64,7 +66,7 @@ public class UserProfileActivity extends BaseActivity
                         }
                     });
         } else {
-            // TODO: lock UserPhotosAdapter animation
+            mUserProfileAdapter.setLockedAnimation(true);
             mRbvBackground.setToFinishedFrame();
         }
     }
@@ -73,8 +75,8 @@ public class UserProfileActivity extends BaseActivity
     public void onStateChange(int state) {
         if (state == RevealBackgroundView.STATE_FINISHED) {
             mRvUserProfile.setVisibility(View.VISIBLE);
-            UserProfileAdapter adapter = new UserProfileAdapter(this);
-            mRvUserProfile.setAdapter(adapter);
+            mUserProfileAdapter = new UserProfileAdapter(this);
+            mRvUserProfile.setAdapter(mUserProfileAdapter);
         } else {
             mRvUserProfile.setVisibility(View.INVISIBLE);
         }

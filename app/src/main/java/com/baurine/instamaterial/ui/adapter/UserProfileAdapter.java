@@ -35,13 +35,16 @@ public class UserProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private static final Interpolator INTERPOLATOR = new DecelerateInterpolator();
     private static final int PROFILE_OPTIONS_ANIMATION_DELAY = 300;
+    private static final int PHOTO_ANIMATION_DELAY = 600;
 
     private final Context mContext;
     private final int mCellSize;
     private final int mAvatarSize;
     private final String mProfileAvatar;
     private final List<String> mUserPhotos;
+
     private boolean mLockedAnimation;
+    private int mLastAnimationPos;
 
     public UserProfileAdapter(Context context) {
         mContext = context;
@@ -161,6 +164,9 @@ public class UserProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
                     }
                 });
+        if (position > mLastAnimationPos) {
+            mLastAnimationPos = position;
+        }
     }
 
     private void animateProfileHeader(ProfileHeaderViewHolder holder) {
@@ -196,7 +202,25 @@ public class UserProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     private void animatePhoto(PhotoViewHolder holder) {
+        if (!mLockedAnimation) {
+            // 只有第一屏的图片会有这种动画效果
+            if (mLastAnimationPos == holder.getAdapterPosition()) {
+                setLockedAnimation(true);
+            }
 
+            int delayAnimationTime = PHOTO_ANIMATION_DELAY + holder.getAdapterPosition() * 30;
+
+            holder.mSflPhotoRoot.setScaleX(0f);
+            holder.mSflPhotoRoot.setScaleY(0f);
+
+            holder.mSflPhotoRoot.animate().scaleX(1f).scaleY(1f)
+                    .setDuration(200).setStartDelay(delayAnimationTime)
+                    .setInterpolator(INTERPOLATOR).start();
+        }
+    }
+
+    public void setLockedAnimation(boolean lockedAnimation) {
+        mLockedAnimation = lockedAnimation;
     }
 
     static class ProfileHeaderViewHolder extends RecyclerView.ViewHolder {
