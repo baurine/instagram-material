@@ -21,53 +21,55 @@
             android:layout_marginRight="16dp"
             android:src="@mipmap/ic_launcher" />
 
-        <TextView
-            android:id="@+id/tv_user_profile_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@id/iv_user_profile_avatar"
-            android:text="Baurine Huang"
-            android:textColor="#ffffff"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/tv_user_profile_id_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_user_profile_name"
-            android:layout_toRightOf="@id/iv_user_profile_avatar"
-            android:text="\@baurine"
-            android:textColor="#bbbbbb"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/tv_user_profile_about"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_user_profile_id_name"
-            android:layout_toRightOf="@id/iv_user_profile_avatar"
-            android:text="work hard, enjoy life."
-            android:textColor="#ffffff"
-            android:textSize="12sp" />
-
-        <Button
-            android:id="@+id/btn_follow"
+        <LinearLayout
+            android:id="@+id/ll_user_profile_detail"
             android:layout_width="match_parent"
-            android:layout_height="24dp"
-            android:layout_below="@id/tv_user_profile_about"
-            android:layout_marginRight="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="wrap_content"
             android:layout_toRightOf="@id/iv_user_profile_avatar"
-            android:background="@drawable/btn_following"
-            android:text="following"
-            android:textColor="#ffffff"
-            android:textSize="12sp" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_user_profile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Baurine Huang"
+                android:textColor="#ffffff"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tv_user_profile_id_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="\@baurine"
+                android:textColor="#bbbbbb"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_user_profile_about"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="work hard, enjoy life."
+                android:textColor="#ffffff"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_follow"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/btn_following"
+                android:text="following"
+                android:textColor="#ffffff"
+                android:textSize="12sp" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/ll_user_stats"
+        android:id="@+id/ll_user_profile_stats"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
