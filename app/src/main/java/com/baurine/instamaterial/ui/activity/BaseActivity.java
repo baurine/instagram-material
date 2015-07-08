@@ -17,12 +17,15 @@ import com.baurine.instamaterial.utils.CommonUtils;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.Optional;
 
 public class BaseActivity extends AppCompatActivity
         implements DrawerMenuView.OnDrawerClickListener {
 
+    @Optional
     @InjectView(R.id.tl_toolbar)
     Toolbar mToolbar;
+    @Optional
     @InjectView(R.id.iv_logo)
     ImageView mIvLogo;
 
@@ -35,7 +38,14 @@ public class BaseActivity extends AppCompatActivity
         ButterKnife.inject(this);
 
         setupToolbar();
-        setupDrawer();
+
+        if (needDrawer()) {
+            setupDrawer();
+        }
+    }
+
+    private boolean needDrawer() {
+        return true;
     }
 
     protected void setupToolbar() {
