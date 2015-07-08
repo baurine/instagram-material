@@ -4,14 +4,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.baurine.instamaterial.R;
+import com.baurine.instamaterial.ui.manager.DrawerLayoutInstaller;
+import com.baurine.instamaterial.ui.view.DrawerMenuView;
+import com.baurine.instamaterial.utils.CommonUtils;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity
+        implements DrawerMenuView.OnDrawerClickListener {
 
     @InjectView(R.id.tl_toolbar)
     Toolbar mToolbar;
@@ -26,6 +31,7 @@ public class BaseActivity extends AppCompatActivity {
         ButterKnife.inject(this);
 
         setupToolbar();
+        setupDrawer();
     }
 
     protected void setupToolbar() {
@@ -33,6 +39,18 @@ public class BaseActivity extends AppCompatActivity {
             setSupportActionBar(mToolbar);
             mToolbar.setNavigationIcon(R.mipmap.ic_menu_white);
         }
+    }
+
+    private void setupDrawer() {
+        DrawerMenuView drawerMenuView = new DrawerMenuView(this);
+        drawerMenuView.setOnDrawerClickListener(this);
+
+        DrawerLayoutInstaller.from(this)
+                .drawerRoot(R.layout.drawer_root)
+                .drawerLeftView(drawerMenuView)
+                .drawerLeftWidth(CommonUtils.dpToPx(300))
+                .withNavigationIconToggler(mToolbar)
+                .build();
     }
 
     @Override
@@ -53,5 +71,10 @@ public class BaseActivity extends AppCompatActivity {
 
     public MenuItem getMenuItemInbox() {
         return mMiInbox;
+    }
+
+    @Override
+    public void onHeaderClick(View view) {
+
     }
 }
