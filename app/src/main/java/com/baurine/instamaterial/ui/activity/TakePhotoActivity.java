@@ -32,7 +32,7 @@ public class TakePhotoActivity extends BaseActivity
     }
 
     private void setupRevealBackground(Bundle savedInstanceState) {
-        mRbvBackground.setFillPaintColor(0xFF16181a);
+        mRbvBackground.setFillPaintColor(0xFF16181A);
         mRbvBackground.setOnStateChangeListener(this);
         if (savedInstanceState == null) {
             final int[] startLocation = getIntent().getIntArrayExtra(ARG_REVEAL_START_LOCATION);
