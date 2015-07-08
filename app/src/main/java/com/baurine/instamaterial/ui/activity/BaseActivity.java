@@ -1,5 +1,8 @@
 package com.baurine.instamaterial.ui.activity;
 
+import android.os.Handler;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -24,6 +27,7 @@ public class BaseActivity extends AppCompatActivity
     ImageView mIvLogo;
 
     private MenuItem mMiInbox;
+    private DrawerLayout mDrawerLayout;
 
     @Override
     public void setContentView(int resLayoutId) {
@@ -45,7 +49,7 @@ public class BaseActivity extends AppCompatActivity
         DrawerMenuView drawerMenuView = new DrawerMenuView(this);
         drawerMenuView.setOnDrawerClickListener(this);
 
-        DrawerLayoutInstaller.from(this)
+        mDrawerLayout = DrawerLayoutInstaller.from(this)
                 .drawerRoot(R.layout.drawer_root)
                 .drawerLeftView(drawerMenuView)
                 .drawerLeftWidth(CommonUtils.dpToPx(300))
@@ -74,7 +78,17 @@ public class BaseActivity extends AppCompatActivity
     }
 
     @Override
-    public void onHeaderClick(View view) {
-
+    public void onHeaderClick(final View view) {
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                int[] startLocation = new int[2];
+                view.getLocationOnScreen(startLocation);
+                startLocation[0] += view.getWidth() / 2;
+                UserProfileActivity.startUserProfileFromLocation(startLocation, BaseActivity.this);
+                overridePendingTransition(0, 0);
+            }
+        }, 200);
     }
 }
