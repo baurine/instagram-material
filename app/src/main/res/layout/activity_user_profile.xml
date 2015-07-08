@@ -11,15 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <include
-        android:id="@+id/tl_toolbar"
-        layout="@layout/view_feed_toolbar" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_user_profile"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="?attr/actionBarSize" />
+
+    <include
+        android:id="@+id/tl_toolbar"
+        layout="@layout/view_feed_toolbar" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_create"

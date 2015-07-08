@@ -94,7 +94,7 @@ public class DrawerMenuAdapter extends BaseAdapter {
     private void bindViewHolder(MenuItemViewHolder viewHolder, int position) {
         DrawerMenuItem item = getItem(position);
         viewHolder.mIvIcon.setImageResource(item.mIconResId);
-        viewHolder.mIvIcon.setVisibility(item.mIsDivider ? View.GONE : View.VISIBLE);
+        viewHolder.mIvIcon.setVisibility(item.mIconResId == 0 ? View.GONE : View.VISIBLE);
         viewHolder.mTvLabel.setText(item.mLabel);
     }
 
