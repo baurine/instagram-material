@@ -44,7 +44,7 @@ public class BaseActivity extends AppCompatActivity
         }
     }
 
-    private boolean needDrawer() {
+    protected boolean needDrawer() {
         return true;
     }
 

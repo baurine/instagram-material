@@ -18,6 +18,7 @@ import com.baurine.instamaterial.ui.view.FeedContextMenu;
 import com.baurine.instamaterial.utils.CommonUtils;
 
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity
         implements FeedAdapter.OnFeedItemClickListener,
@@ -126,6 +127,15 @@ public class MainActivity extends BaseActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick(R.id.fab_create)
+    public void onFabCreateClick() {
+        int[] startLocation = new int[2];
+        mFabCreate.getLocationOnScreen(startLocation);
+        startLocation[0] += mFabCreate.getWidth() / 2;
+        TakePhotoActivity.startCameraFromLocation(startLocation, this);
+        overridePendingTransition(0, 0);
     }
 
     @Override

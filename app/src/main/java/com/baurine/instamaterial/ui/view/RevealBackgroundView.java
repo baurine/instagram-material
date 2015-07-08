@@ -67,6 +67,10 @@ public class RevealBackgroundView extends View {
         invalidate();
     }
 
+    public void setFillPaintColor(int color) {
+        mFillPaint.setColor(color);
+    }
+
     public void startFromLocation(int[] tapLocationOnScreen) {
         changeState(STATE_FILL_STARTED);
         mStartLocationX = tapLocationOnScreen[0];
