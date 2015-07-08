@@ -9,4 +9,6 @@
 
     <dimen name="comment_avatar_size">56dp</dimen>
     <dimen name="user_profile_avatar_size">88dp</dimen>
+
+    <dimen name="drawer_avatar_size">64dp</dimen>
 </resources>
