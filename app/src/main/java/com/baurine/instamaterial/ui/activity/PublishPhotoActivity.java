@@ -7,10 +7,19 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ToggleButton;
 
 import com.baurine.instamaterial.R;
 
+import butterknife.InjectView;
+import butterknife.OnClick;
+
 public class PublishPhotoActivity extends BaseActivity {
+
+    @InjectView(R.id.tb_publish_follower)
+    ToggleButton mTbPublishFollower;
+    @InjectView(R.id.tb_publish_direct)
+    ToggleButton mTbPublishDirect;
 
     public static void openWithOpenUri(Uri uri, Activity startingActivity) {
         Intent intent = new Intent(startingActivity, PublishPhotoActivity.class);
@@ -56,6 +65,18 @@ public class PublishPhotoActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick(R.id.tb_publish_follower)
+    public void onClickTbPublishFollower() {
+        mTbPublishFollower.setChecked(true);
+        mTbPublishDirect.setChecked(false);
+    }
+
+    @OnClick(R.id.tb_publish_direct)
+    public void onClickTbPublishDirect() {
+        mTbPublishDirect.setChecked(true);
+        mTbPublishFollower.setChecked(false);
     }
 
 }
