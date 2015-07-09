@@ -1,10 +1,10 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff">
+    android:background="#ffffff"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -63,15 +63,62 @@
         </LinearLayout>
 
         <!-- publish content -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></RelativeLayout>
-
-        <!-- share to sns -->
-        <LinearLayout
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_publish_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"></LinearLayout>
+            android:layout_gravity="center"
+            android:layout_margin="16dp"
+            card_view:cardCornerRadius="4dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/iv_thumbnail"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:src="@mipmap/ic_launcher" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_toRightOf="@id/iv_thumbnail"
+                    android:background="@null"
+                    android:hint="Say something"
+                    android:lines="4" />
+
+                <View
+                    android:id="@+id/v_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/iv_thumbnail"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#dddddd" />
+
+                <Switch
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/v_divider"
+                    android:text="ADD TO PHOTO MAP" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <!-- share to sns -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/img_share_mock" />
 
     </LinearLayout>
+
 </ScrollView>

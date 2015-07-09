@@ -45,7 +45,8 @@
         <activity
             android:name=".ui.activity.PublishPhotoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.TransparentActivity" />
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>
