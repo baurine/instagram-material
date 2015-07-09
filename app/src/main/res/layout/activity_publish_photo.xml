@@ -1,4 +1,5 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,17 +12,23 @@
         android:orientation="vertical">
 
         <!-- title -->
-        <LinearLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tl_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:padding="16dp">
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/transparent"
+            android:elevation="@dimen/default_elevation"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="PublishActivity" />
-        </LinearLayout>
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="SHARE TO"
+                android:textColor="#666666"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </android.support.v7.widget.Toolbar>
 
         <!-- publish target -->
         <LinearLayout
