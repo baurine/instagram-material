@@ -11,4 +11,6 @@
     <dimen name="user_profile_avatar_size">88dp</dimen>
 
     <dimen name="drawer_avatar_size">64dp</dimen>
+
+    <dimen name="publish_photo_thumbnail_size">96dp</dimen>
 </resources>

@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,6 +32,8 @@ import com.commonsware.cwac.camera.CameraView;
 import com.commonsware.cwac.camera.PictureTransaction;
 import com.commonsware.cwac.camera.SimpleCameraHost;
 
+import java.io.File;
+
 import butterknife.InjectView;
 import butterknife.OnClick;
 
@@ -46,6 +49,7 @@ public class TakePhotoActivity extends BaseActivity
     private static final int STATE_SETUP_PHOTO = 1;
 
     private int mCurState;
+    private File mPhotoPath;
 
     @InjectView(R.id.rbv_background)
     RevealBackgroundView mRbvBackground;
@@ -208,7 +212,7 @@ public class TakePhotoActivity extends BaseActivity
     @OnClick(R.id.btn_take_photo)
     public void takePhoto() {
         mBtnTakePhoto.setEnabled(false);
-        mCameraView.takePicture(true, false);
+        mCameraView.takePicture(true, true);
         animateShutter();
     }
 
@@ -219,7 +223,7 @@ public class TakePhotoActivity extends BaseActivity
 
     @OnClick(R.id.ib_go_publish)
     public void publishPhoto() {
-        PublishPhotoActivity.openWithOpenUri(null, this);
+        PublishPhotoActivity.openWithPhotoUri(Uri.fromFile(mPhotoPath), this);
     }
 
     private void animateShutter() {
@@ -284,6 +288,12 @@ public class TakePhotoActivity extends BaseActivity
                     showTakenPicture(bitmap);
                 }
             });
+        }
+
+        @Override
+        public void saveImage(PictureTransaction xact, byte[] image) {
+            super.saveImage(xact, image);
+            mPhotoPath = getPhotoPath();
         }
     }
 

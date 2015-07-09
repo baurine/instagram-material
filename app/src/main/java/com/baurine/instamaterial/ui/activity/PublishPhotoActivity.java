@@ -7,23 +7,35 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.animation.OvershootInterpolator;
+import android.widget.ImageView;
 import android.widget.ToggleButton;
 
 import com.baurine.instamaterial.R;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class PublishPhotoActivity extends BaseActivity {
 
+    public static final String ARGU_PHOTO_URI = "argu_photo_uri";
+
     @InjectView(R.id.tb_publish_follower)
     ToggleButton mTbPublishFollower;
     @InjectView(R.id.tb_publish_direct)
     ToggleButton mTbPublishDirect;
+    @InjectView(R.id.iv_thumbnail)
+    ImageView mIvPhotoThumbnail;
 
-    public static void openWithOpenUri(Uri uri, Activity startingActivity) {
+    private Uri mPhotoUri;
+    private int mPhotoSize;
+
+    public static void openWithPhotoUri(Uri photoUri, Activity startingActivity) {
         Intent intent = new Intent(startingActivity, PublishPhotoActivity.class);
-        intent.setData(uri);
+        intent.putExtra(ARGU_PHOTO_URI, photoUri);
         startingActivity.startActivity(intent);
     }
 
@@ -32,7 +44,19 @@ public class PublishPhotoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_photo);
 
+        getData(savedInstanceState);
         updateToolbar();
+        setupPhotoThumbnail();
+    }
+
+    private void getData(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            mPhotoUri = getIntent().getParcelableExtra(ARGU_PHOTO_URI);
+        } else {
+            mPhotoUri = savedInstanceState.getParcelable(ARGU_PHOTO_URI);
+        }
+
+        mPhotoSize = getResources().getDimensionPixelSize(R.dimen.publish_photo_thumbnail_size);
     }
 
     private void updateToolbar() {
@@ -43,6 +67,44 @@ public class PublishPhotoActivity extends BaseActivity {
                 onBackPressed();
             }
         });
+    }
+
+    private void setupPhotoThumbnail() {
+        mIvPhotoThumbnail.getViewTreeObserver().addOnPreDrawListener(
+                new ViewTreeObserver.OnPreDrawListener() {
+                    @Override
+                    public boolean onPreDraw() {
+                        mIvPhotoThumbnail.getViewTreeObserver().removeOnPreDrawListener(this);
+                        loadPhotoThumbnail();
+                        return true;
+                    }
+                });
+    }
+
+    private void loadPhotoThumbnail() {
+        Picasso.with(this)
+                .load(mPhotoUri)
+                .centerCrop()
+                .resize(mPhotoSize, mPhotoSize)
+                .into(mIvPhotoThumbnail, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        animatePhotoThumbnail();
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
+    }
+
+    private void animatePhotoThumbnail() {
+        mIvPhotoThumbnail.setScaleX(0.0f);
+        mIvPhotoThumbnail.setScaleY(0.0f);
+        mIvPhotoThumbnail.animate().scaleX(1.0f).scaleY(1.0f)
+                .setDuration(400).setInterpolator(new OvershootInterpolator())
+                .setStartDelay(200).start();
     }
 
     @Override
@@ -65,6 +127,12 @@ public class PublishPhotoActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(ARGU_PHOTO_URI, mPhotoUri);
     }
 
     @OnClick(R.id.tb_publish_follower)

@@ -78,8 +78,8 @@
 
                 <ImageView
                     android:id="@+id/iv_thumbnail"
-                    android:layout_width="96dp"
-                    android:layout_height="96dp"
+                    android:layout_width="@dimen/publish_photo_thumbnail_size"
+                    android:layout_height="@dimen/publish_photo_thumbnail_size"
                     android:src="@mipmap/ic_launcher" />
 
                 <EditText
