@@ -101,6 +101,7 @@
                     android:layout_weight="1" />
 
                 <ImageButton
+                    android:id="@+id/ib_go_publish"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:background="@drawable/btn_default_light"

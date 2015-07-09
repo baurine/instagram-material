@@ -217,6 +217,11 @@ public class TakePhotoActivity extends BaseActivity
         onBackPressed();
     }
 
+    @OnClick(R.id.ib_go_publish)
+    public void publishPhoto() {
+        PublishPhotoActivity.openWithOpenUri(null, this);
+    }
+
     private void animateShutter() {
         mVShutter.setVisibility(View.VISIBLE);
         mVShutter.setAlpha(0.0f);
