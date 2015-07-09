@@ -111,19 +111,18 @@
         </ViewSwitcher>
 
         <com.baurine.instamaterial.ui.view.SquareFrameLayout
-            android:id="@+id/sfl_photo_root"
+            android:id="@+id/sfl_camera_root"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!-- 暂时注释掉，因为会导致程序崩溃
+
             <com.commonsware.cwac.camera.CameraView
                 android:id="@+id/camera_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-            -->
 
-            <ImageButton
-                android:id="@+id/ib_taken_photo"
+            <ImageView
+                android:id="@+id/iv_taken_photo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
