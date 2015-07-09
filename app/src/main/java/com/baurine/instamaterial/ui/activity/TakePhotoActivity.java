@@ -11,6 +11,8 @@ import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
@@ -20,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.ViewSwitcher;
 
 import com.baurine.instamaterial.R;
+import com.baurine.instamaterial.ui.adapter.PhotoFilterAdapter;
 import com.baurine.instamaterial.ui.view.RevealBackgroundView;
 import com.baurine.instamaterial.ui.view.SquareFrameLayout;
 import com.commonsware.cwac.camera.CameraHost;
@@ -53,6 +56,8 @@ public class TakePhotoActivity extends BaseActivity
     ViewSwitcher mVsBottomPanel;
     @InjectView(R.id.btn_take_photo)
     Button mBtnTakePhoto;
+    @InjectView(R.id.rv_photo_filters)
+    RecyclerView mRvPhotoFilters;
 
     @InjectView(R.id.sfl_camera_root)
     SquareFrameLayout mSflCameraRoot;
@@ -77,6 +82,7 @@ public class TakePhotoActivity extends BaseActivity
         updateState(STATE_TAEK_PHOTO);
         setupRevealBackground(savedInstanceState);
         setupPanel();
+        setupPhotoFilters();
     }
 
     @Override
@@ -133,6 +139,14 @@ public class TakePhotoActivity extends BaseActivity
                         return false;
                     }
                 });
+    }
+
+    private void setupPhotoFilters() {
+        PhotoFilterAdapter adapter = new PhotoFilterAdapter(this);
+        mRvPhotoFilters.setHasFixedSize(true);
+        mRvPhotoFilters.setAdapter(adapter);
+        mRvPhotoFilters.setLayoutManager(new LinearLayoutManager(
+                this, LinearLayoutManager.HORIZONTAL, false));
     }
 
     @Override
