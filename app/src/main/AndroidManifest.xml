@@ -42,7 +42,7 @@
         <activity
             android:name=".ui.activity.TakePhotoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.TransparentActivity.FullScreen" />
+            android:theme="@style/AppTheme.TransparentActivity" />
         <activity
             android:name=".ui.activity.PublishPhotoActivity"
             android:screenOrientation="portrait"
