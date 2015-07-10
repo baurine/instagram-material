@@ -19,6 +19,7 @@
             android:src="@mipmap/ic_feed_top" />
 
         <com.baurine.instamaterial.ui.view.SquareFrameLayout
+            android:id="@+id/sfl_photo_root"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -31,14 +32,16 @@
                 android:id="@+id/v_bg_like"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/bg_like_circle" />
+                android:background="@drawable/bg_like_circle"
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/iv_like"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="center"
-                android:src="@mipmap/heart_outline_white" />
+                android:src="@mipmap/heart_outline_white"
+                android:visibility="gone" />
 
         </com.baurine.instamaterial.ui.view.SquareFrameLayout>
 

@@ -6,17 +6,21 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextSwitcher;
 
 import com.baurine.instamaterial.R;
+import com.baurine.instamaterial.ui.view.SendingProgressView;
 import com.baurine.instamaterial.utils.CommonUtils;
 
 import java.util.HashMap;
@@ -52,6 +56,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
     private final Map<Integer, Integer> mLikesCount = new HashMap<>();
     private final Set<Integer> mLikedPosition = new HashSet<>();
     private final Map<CellFeedViewHolder, AnimatorSet> mLikedAnimation = new HashMap<>();
+
+    private int mLoadingViewSize = CommonUtils.dpToPx(200);
+    private boolean mShowLoading = false;
+    private static final int TYPE_NORMAL = 0;
+    private static final int TYPE_LOADING = 1;
 
     public FeedAdapter(Context context) {
         mContext = context;
@@ -95,17 +104,40 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
                 R.layout.item_feed, parent, false);
 
         CellFeedViewHolder holder = new CellFeedViewHolder(view);
-        holder.mIvUserProfile.setOnClickListener(this);
-        holder.mIvFeedCenter.setOnClickListener(this);
-        holder.mIbLike.setOnClickListener(this);
-        holder.mIbComment.setOnClickListener(this);
-        holder.mIbMore.setOnClickListener(this);
+        if (viewType == TYPE_NORMAL) {
+            holder.mIvUserProfile.setOnClickListener(this);
+            holder.mIvFeedCenter.setOnClickListener(this);
+            holder.mIbLike.setOnClickListener(this);
+            holder.mIbComment.setOnClickListener(this);
+            holder.mIbMore.setOnClickListener(this);
+        } else {
+            View bgView = new View(mContext);
+            bgView.setBackgroundColor(0x77ffffff);
+            holder.mVProgressBg = bgView;
+            holder.mSflPhotoRoot.addView(bgView, new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
+                    mLoadingViewSize, mLoadingViewSize);
+            layoutParams.gravity = Gravity.CENTER;
+            SendingProgressView progressView = new SendingProgressView(mContext);
+            holder.mProgressView = progressView;
+            holder.mSflPhotoRoot.addView(progressView, layoutParams);
+        }
 
         return holder;
     }
 
     @Override
     public void onBindViewHolder(CellFeedViewHolder holder, int position) {
+        if (getItemViewType(position) == TYPE_NORMAL) {
+            onBindNormalViewHolder(holder, position);
+        } else {
+            onBindLoadingViewHolder(holder, position);
+        }
+    }
+
+    public void onBindNormalViewHolder(CellFeedViewHolder holder, int position) {
         runEnterAnimation(holder.itemView, position);
         holder.mIvFeedCenter.setImageResource(mFeedCenterImgs[position % 2]);
         holder.mIvFeedBottom.setImageResource(mFeedBottomImgs[position % 2]);
@@ -125,9 +157,64 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
         resetLikedAnimation(holder);
     }
 
+    private void onBindLoadingViewHolder(final CellFeedViewHolder holder, int position) {
+        holder.mIvFeedCenter.setImageResource(mFeedCenterImgs[0]);
+        holder.mIvFeedBottom.setImageResource(mFeedBottomImgs[0]);
+
+        holder.mProgressView.getViewTreeObserver().addOnPreDrawListener(
+                new ViewTreeObserver.OnPreDrawListener() {
+                    @Override
+                    public boolean onPreDraw() {
+                        holder.mProgressView.getViewTreeObserver().removeOnPreDrawListener(this);
+
+                        // 这三行必须得有，reset 这两个 view 的状态
+                        // 否则只有第一次动画可以看到
+                        holder.mVProgressBg.setAlpha(1f);
+                        holder.mProgressView.setScaleX(1f);
+                        holder.mProgressView.setScaleY(1f);
+                        holder.mProgressView.simulateProgress();
+                        return true;
+                    }
+                }
+        );
+
+        holder.mProgressView.setOnLoadingFinishedListener(
+                new SendingProgressView.OnLoadingFinishedListener() {
+                    @Override
+                    public void onLoadingFinished() {
+                        animateLoadingFinished(holder);
+                    }
+                });
+    }
+
+    private void animateLoadingFinished(final CellFeedViewHolder holder) {
+        holder.mProgressView.animate().scaleX(0f).scaleY(0f).setDuration(200).setStartDelay(100);
+        holder.mVProgressBg.animate().alpha(0f).setDuration(200).setStartDelay(100)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        mShowLoading = false;
+                        notifyItemChanged(0);
+                    }
+                }).start();
+    }
+
     @Override
     public int getItemCount() {
         return mItemsCount;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (mShowLoading && position == 0) {
+            return TYPE_LOADING;
+        }
+        return TYPE_NORMAL;
+    }
+
+    public void showLoadingView() {
+        mShowLoading = true;
+        notifyItemChanged(0);
     }
 
     @Override
@@ -314,6 +401,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
 
         @InjectView(R.id.iv_user_profile)
         ImageView mIvUserProfile;
+        @InjectView(R.id.sfl_photo_root)
+        FrameLayout mSflPhotoRoot;
         @InjectView(R.id.iv_feed_center)
         ImageView mIvFeedCenter;
         @InjectView(R.id.v_bg_like)
@@ -330,6 +419,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
         ImageButton mIbMore;
         @InjectView(R.id.ts_likes_counter)
         TextSwitcher mTsLikesCounter;
+
+        View mVProgressBg;
+        SendingProgressView mProgressView;
 
         public CellFeedViewHolder(View view) {
             super(view);

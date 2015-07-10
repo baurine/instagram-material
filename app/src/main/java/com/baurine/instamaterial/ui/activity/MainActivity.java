@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -52,9 +53,18 @@ public class MainActivity extends BaseActivity
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         if (ACTION_SHOW_LOADING_ITEM.equals(intent.getAction())) {
-            // TODO
-            // show loading item
+            showFeedLoadingItemDelayed();
         }
+    }
+
+    private void showFeedLoadingItemDelayed() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRvFeed.smoothScrollToPosition(0);
+                mFeedAdapter.showLoadingView();
+            }
+        }, 500);
     }
 
     @Override
