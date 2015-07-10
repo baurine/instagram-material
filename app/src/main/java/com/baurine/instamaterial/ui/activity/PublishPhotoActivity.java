@@ -123,6 +123,7 @@ public class PublishPhotoActivity extends BaseActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_publish_photo) {
+            MainActivity.bringToTopForPublishingPhoto(this);
             return true;
         }
 

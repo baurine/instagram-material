@@ -2,6 +2,8 @@ package com.baurine.instamaterial.ui.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +26,8 @@ public class MainActivity extends BaseActivity
         implements FeedAdapter.OnFeedItemClickListener,
         FeedContextMenu.OnFeedContextMenuItemClickListener {
 
+    private static final String ACTION_SHOW_LOADING_ITEM = "action_show_loading_item";
+
     private static final int ANIM_DURATION_TOOLBAR = 300;
     private static final int ANIM_DURATION_FAB = 400;
 
@@ -35,6 +39,23 @@ public class MainActivity extends BaseActivity
     private FeedAdapter mFeedAdapter;
 
     private boolean mPendingIntroAnimation = false;
+
+    public static void bringToTopForPublishingPhoto(Activity startingActivity) {
+        Intent intent = new Intent(startingActivity, MainActivity.class);
+        // 等同于 launchMode = "singleTask"
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.setAction(ACTION_SHOW_LOADING_ITEM);
+        startingActivity.startActivity(intent);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (ACTION_SHOW_LOADING_ITEM.equals(intent.getAction())) {
+            // TODO
+            // show loading item
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

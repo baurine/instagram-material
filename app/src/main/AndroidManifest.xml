@@ -36,6 +36,7 @@
             android:theme="@style/AppTheme.TransparentActivity" />
         <activity
             android:name=".ui.activity.UserProfileActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.TransparentActivity" />
         <activity
