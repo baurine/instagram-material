@@ -26,31 +26,40 @@
 
 #### 截图
 Feeds
+
 ![01_feeds](apk/01_feeds.jpg)
 
 Comments
+
 ![02_comments](apk/02_comments.jpg)
 
 UserProfile
+
 ![03_user_profile](apk/03_user_profile.jpg)
 
 Drawer
+
 ![04_drawer](apk/04_drawer.jpg)
 
 TakePhoto
+
 ![05_take_photo](apk/05_take_photo.jpg)
 
 EditPhoto
+
 ![06_edit_photo](apk/06_edit_photo.jpg)
 
 PublishPhoto
+
 ![07_publish_photo](apk/07_publish_photo.jpg)
 
 SendingPhoto
+
 ![08_sending_photo](apk/08_sending_photo.jpg)
 
 #### MX 上按钮异常的解决办法
 拍照按钮异常 (正常的情况看上面的截图)
+
 ![abnormal_01](apk/abnormal_01.jpg)
 
 解决办法：
@@ -83,6 +92,7 @@ SendingPhoto
     </layer-list>
 
 选择发布对象按钮异常 (正常的情况看上面的截图)
+
 ![abnormal_02](apk/abnormal_02.jpg)
 
 解决办法：
