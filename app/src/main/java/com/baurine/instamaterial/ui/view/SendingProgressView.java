@@ -17,6 +17,8 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
 
 import com.baurine.instamaterial.R;
@@ -115,7 +117,9 @@ public class SendingProgressView extends View {
     private void setupSimulateProgressAnimator() {
         mProgressAnimator = ObjectAnimator.ofFloat(this, "mCurProgress", 0f, 100f)
                 .setDuration(2000);
-        mProgressAnimator.setInterpolator(new AccelerateInterpolator());
+        // mProgressAnimator.setInterpolator(new AccelerateInterpolator());
+        // change to LinearInterpolator
+        mProgressAnimator.setInterpolator(new LinearInterpolator());
         mProgressAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -139,7 +143,7 @@ public class SendingProgressView extends View {
     private void setupDoneAnimators() {
         mDoneAnimator = ObjectAnimator.ofFloat(this, "mCurDoneBgOffset", MAX_DONE_BG_OFFSET, 0)
                 .setDuration(300);
-        mDoneAnimator.setInterpolator(new AccelerateInterpolator());
+        mDoneAnimator.setInterpolator(new DecelerateInterpolator());
 
         mCheckmarkAnimator = ObjectAnimator.ofFloat(this, "mCurCheckmarkOffset",
                 MAX_DONE_CHECKMARK_OFFSET, 0).setDuration(300);
@@ -193,7 +197,6 @@ public class SendingProgressView extends View {
             drawArcForCurProgress();
         } else if (mCurState == STATE_DONE_STARTED) {
             drawFrameForDoneAnimation();
-            postInvalidate(); // ??
         } else if (mCurState == STATE_FINISHED) {
             drawFinishedState();
         }
