@@ -110,3 +110,17 @@ SendingPhoto
             </shape>
         </item>
     </layer-list>
+
+-----------
+
+开始用 LeanCloud SDK 来实现功能。
+
+#### 用 weibo 登录
+
+登录界面 (加了些动画效果)。
+
+![login.jpg](apk/login.jpg)
+
+用 weibo 登录成功后，显示 weibo 头像和名字。
+
+![weibo_profile.jpg](apk/weibo_profile.jpg)
