@@ -1,12 +1,23 @@
 package com.baurine.instamaterial.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.LogInCallback;
+import com.avos.sns.SNS;
+import com.avos.sns.SNSBase;
+import com.avos.sns.SNSCallback;
+import com.avos.sns.SNSException;
+import com.avos.sns.SNSType;
 import com.baurine.instamaterial.R;
+import com.baurine.instamaterial.ui.manager.ProgressDialogManager;
 import com.baurine.instamaterial.utils.CommonUtils;
 
 import butterknife.InjectView;
@@ -57,8 +68,51 @@ public class LoginActivity extends BaseActivity {
         return false;
     }
 
+    @OnClick(R.id.btn_login_weibo)
+    public void loginWithWeibo() {
+        try {
+            SNS.setupPlatform(SNSType.AVOSCloudSNSSinaWeibo,
+                    "https://leancloud.cn/1.1/sns/goto/9lo2zxpkz1knk29m");
+        } catch (AVException e) {
+            showMessage(e.getMessage());
+            return;
+        }
+        ProgressDialogManager.getInstance().showProgressDialog(this, "Login...");
+        SNS.loginWithCallback(this, SNSType.AVOSCloudSNSSinaWeibo, new SNSCallback() {
+            @Override
+            public void done(SNSBase base, SNSException e) {
+                if (e == null) {
+                    SNS.loginWithAuthData(base.userInfo(), new LogInCallback<AVUser>() {
+                        @Override
+                        public void done(final AVUser user, AVException e) {
+                            if (e == null) {
+                                showMessage("Login success!");
+                                MainActivity.enterFromLoginActivity(LoginActivity.this);
+                            } else {
+                                showMessage(e.getMessage());
+                            }
+                        }
+                    });
+                } else {
+                    showMessage(e.getMessage());
+                }
+            }
+        });
+    }
+
     @OnClick(R.id.btn_login_guest)
     public void loginAsGuest() {
         MainActivity.enterFromLoginActivity(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        SNS.onActivityResult(requestCode, resultCode, data, SNSType.AVOSCloudSNSSinaWeibo);
+    }
+
+    private void showMessage(String message) {
+        ProgressDialogManager.getInstance().hideProgressDialog();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

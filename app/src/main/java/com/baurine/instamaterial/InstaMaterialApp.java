@@ -15,7 +15,7 @@ public class InstaMaterialApp extends Application {
                 "6xfzwyvk2cq9903d81tj9k40bf6gkwwvz71gjwc13h7arvbb",
                 "nxm2dtmwnuqboi3aln26hmvif3xmlu4vbzghi938v896n3oj");
 
-        testLeanCloud();
+        // testLeanCloud();
     }
 
     private void testLeanCloud() {

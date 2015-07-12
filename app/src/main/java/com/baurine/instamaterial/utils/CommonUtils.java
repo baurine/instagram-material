@@ -37,6 +37,7 @@ public class CommonUtils {
     }
 
     public static int dpToPx(int dp) {
-        return (int) (dp* Resources.getSystem().getDisplayMetrics().density);
+        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
+
 }
