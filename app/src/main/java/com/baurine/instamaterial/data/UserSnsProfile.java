@@ -13,6 +13,7 @@ public class UserSnsProfile {
         UserSnsProfile userSnsProfile = new UserSnsProfile();
 
         try {
+            // sina weibo json object
             JSONObject userInfo = jsonObject.getJSONObject("user_info");
             userSnsProfile.mName = userInfo.getString("name");
             userSnsProfile.mAvatarUrlLarge = userInfo.getString("avatar_large");

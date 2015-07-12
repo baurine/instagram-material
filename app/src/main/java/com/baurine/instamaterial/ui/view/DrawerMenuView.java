@@ -6,8 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.baurine.instamaterial.R;
+import com.baurine.instamaterial.data.UserSnsProfile;
+import com.baurine.instamaterial.manager.UserManager;
 import com.baurine.instamaterial.ui.adapter.DrawerMenuAdapter;
 import com.squareup.picasso.Picasso;
 
@@ -34,7 +37,15 @@ public class DrawerMenuView extends ListView implements View.OnClickListener {
         setHeaderDividersEnabled(true);
         View headerView = LayoutInflater.from(getContext()).inflate(R.layout.item_drawer_header, null);
         int avatarSize = getResources().getDimensionPixelSize(R.dimen.drawer_avatar_size);
-        String avatarUrl = getResources().getString(R.string.user_profile_photo);
+
+        String avatarUrl;
+        UserSnsProfile profile = UserManager.getInstance().getUserSnsProfile();
+        if (profile != null && profile.mAvatarUrlLarge != null) {
+            avatarUrl = profile.mAvatarUrlLarge;
+        } else {
+            avatarUrl = getResources().getString(R.string.user_profile_photo);
+        }
+
         ImageView avatarView = (ImageView) headerView.findViewById(R.id.iv_avatar);
         Picasso.with(getContext())
                 .load(avatarUrl)
@@ -43,6 +54,11 @@ public class DrawerMenuView extends ListView implements View.OnClickListener {
                 .centerCrop()
                 .transform(new CircleTransformation())
                 .into(avatarView);
+
+        if (profile != null && profile.mName != null) {
+            TextView tvName = (TextView) headerView.findViewById(R.id.tv_label);
+            tvName.setText(profile.mName);
+        }
 
         addHeaderView(headerView);
         headerView.setOnClickListener(this);

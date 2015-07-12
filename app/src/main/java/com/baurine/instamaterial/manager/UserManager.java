@@ -48,4 +48,8 @@ public class UserManager {
         }
     }
 
+    public UserSnsProfile getUserSnsProfile() {
+        return mUserSnsProfile;
+    }
+
 }
