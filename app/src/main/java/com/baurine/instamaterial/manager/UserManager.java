@@ -1,14 +1,21 @@
 package com.baurine.instamaterial.manager;
 
 import com.avos.avoscloud.AVUser;
+import com.baurine.instamaterial.InstaMaterialApp;
 import com.baurine.instamaterial.data.UserSnsProfile;
 
+import org.afinal.simplecache.ACache;
 import org.json.JSONObject;
 
 public class UserManager {
 
+    private static final String WEIBO_PROFILE_KEY = "weibo_profile";
+
+    private JSONObject mSnsJsonObj;
     private UserSnsProfile mUserSnsProfile;
     private AVUser mAVUser;
+
+    private ACache mACache;
 
     private static UserManager mInstance;
 
@@ -20,14 +27,25 @@ public class UserManager {
     }
 
     private UserManager() {
+        mACache = ACache.get(InstaMaterialApp.getContext());
     }
 
-    public void setUserSnsProfile(JSONObject jsonObject) {
-        mUserSnsProfile = UserSnsProfile.createFromJsonObj(jsonObject);
+    public void saveUserSnsProfile(JSONObject jsonObject) {
+        mSnsJsonObj = jsonObject;
+        if (jsonObject != null) {
+            mACache.put(WEIBO_PROFILE_KEY, jsonObject);
+        }
     }
 
-    public void setAVUser(AVUser avUser) {
+    public void saveAVUser(AVUser avUser) {
         mAVUser = avUser;
+
+        if (mSnsJsonObj == null) {
+            mSnsJsonObj = mACache.getAsJSONObject(WEIBO_PROFILE_KEY);
+        }
+        if (mSnsJsonObj != null) {
+            mUserSnsProfile = UserSnsProfile.createFromJsonObj(mSnsJsonObj);
+        }
     }
 
 }

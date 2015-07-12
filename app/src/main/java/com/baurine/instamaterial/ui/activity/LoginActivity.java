@@ -83,12 +83,12 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void done(SNSBase base, SNSException e) {
                 if (e == null) {
-                    UserManager.getInstance().setUserSnsProfile(base.authorizedData());
+                    UserManager.getInstance().saveUserSnsProfile(base.authorizedData());
                     SNS.loginWithAuthData(base.userInfo(), new LogInCallback<AVUser>() {
                         @Override
                         public void done(final AVUser user, AVException e) {
                             if (e == null) {
-                                UserManager.getInstance().setAVUser(user);
+                                UserManager.getInstance().saveAVUser(user);
                                 showMessage("Login success!");
                                 MainActivity.enterFromLoginActivity(LoginActivity.this);
                             } else {
