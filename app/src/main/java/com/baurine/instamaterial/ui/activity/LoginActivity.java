@@ -17,6 +17,7 @@ import com.avos.sns.SNSCallback;
 import com.avos.sns.SNSException;
 import com.avos.sns.SNSType;
 import com.baurine.instamaterial.R;
+import com.baurine.instamaterial.manager.UserManager;
 import com.baurine.instamaterial.ui.manager.ProgressDialogManager;
 import com.baurine.instamaterial.utils.CommonUtils;
 
@@ -82,10 +83,12 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void done(SNSBase base, SNSException e) {
                 if (e == null) {
+                    UserManager.getInstance().setUserSnsProfile(base.authorizedData());
                     SNS.loginWithAuthData(base.userInfo(), new LogInCallback<AVUser>() {
                         @Override
                         public void done(final AVUser user, AVException e) {
                             if (e == null) {
+                                UserManager.getInstance().setAVUser(user);
                                 showMessage("Login success!");
                                 MainActivity.enterFromLoginActivity(LoginActivity.this);
                             } else {
