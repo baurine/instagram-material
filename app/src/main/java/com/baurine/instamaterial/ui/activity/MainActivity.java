@@ -49,6 +49,12 @@ public class MainActivity extends BaseActivity
         startingActivity.startActivity(intent);
     }
 
+    public static void enterFromLoginActivity(Activity startingActivity) {
+        Intent intent = new Intent(startingActivity, MainActivity.class);
+        startingActivity.startActivity(intent);
+        startingActivity.finish();
+    }
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);

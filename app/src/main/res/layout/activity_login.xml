@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorPrimary"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/iv_name_logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/img_toolbar_logo" />
+
+    <ImageView
+        android:id="@+id/iv_icon_logo"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:layout_above="@id/iv_name_logo"
+        android:layout_marginBottom="16dp"
+        android:src="@mipmap/ic_launcher" />
+
+    <Button
+        android:id="@+id/btn_login_guest"
+        style="@style/LoginButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/btn_login_guest"
+        android:text="Just have a look" />
+
+    <Button
+        android:id="@+id/btn_login_weibo"
+        style="@style/LoginButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btn_login_guest"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/btn_login_weibo"
+        android:text="Log in with Weibo" />
+
+</RelativeLayout>

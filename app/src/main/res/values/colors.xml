@@ -21,6 +21,12 @@
     <color name="btn_context_menu_text_red">#ffff0000</color>
 
     <color name="text_like_counter">#2b5a83</color>
+
+    <color name="btn_login_weibo_normal">#f44336</color>
+    <color name="btn_login_weibo_pressed">#d32f2f</color>
+
+    <color name="btn_login_guest_normal">#03a9f4</color>
+    <color name="btn_login_guest_pressed">#0288d1</color>
 </resources>
 
 
