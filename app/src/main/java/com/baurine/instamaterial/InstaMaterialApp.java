@@ -1,7 +1,6 @@
 package com.baurine.instamaterial;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVObject;
@@ -33,10 +32,6 @@ public class InstaMaterialApp extends Application {
         AVObject testObject = new AVObject("TestObject");
         testObject.put("foo", "bar");
         testObject.saveInBackground();
-    }
-
-    public static Context getContext() {
-        return mInstance;
     }
 
     public static InstaMaterialApp getInstance() {
