@@ -43,6 +43,8 @@ public class LoginActivity extends BaseActivity {
         if (savedInstanceState == null) {
             startAnimation();
         }
+
+        UserManager.getInstance().resetUserInfo();
     }
 
     private void startAnimation() {

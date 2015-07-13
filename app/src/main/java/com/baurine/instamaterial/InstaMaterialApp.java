@@ -6,15 +6,21 @@ import android.content.Context;
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVObject;
 
+import org.afinal.simplecache.ACache;
+
 public class InstaMaterialApp extends Application {
 
     private static InstaMaterialApp mInstance;
+
+    private ACache mACache;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
         mInstance = this;
+
+        mACache = ACache.get(this);
 
         AVOSCloud.initialize(this,
                 "6xfzwyvk2cq9903d81tj9k40bf6gkwwvz71gjwc13h7arvbb",
@@ -31,5 +37,13 @@ public class InstaMaterialApp extends Application {
 
     public static Context getContext() {
         return mInstance;
+    }
+
+    public static InstaMaterialApp getInstance() {
+        return mInstance;
+    }
+
+    public static ACache getACache() {
+        return getInstance().mACache;
     }
 }

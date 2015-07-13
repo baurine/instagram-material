@@ -27,7 +27,13 @@ public class UserManager {
     }
 
     private UserManager() {
-        mACache = ACache.get(InstaMaterialApp.getContext());
+        mACache = InstaMaterialApp.getACache();
+    }
+
+    public void resetUserInfo() {
+        mSnsJsonObj = null;
+        mUserSnsProfile = null;
+        mAVUser = null;
     }
 
     public void saveUserSnsProfile(JSONObject jsonObject) {
@@ -51,5 +57,4 @@ public class UserManager {
     public UserSnsProfile getUserSnsProfile() {
         return mUserSnsProfile;
     }
-
 }
