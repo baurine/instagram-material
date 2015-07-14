@@ -17,6 +17,8 @@ public class UserManager {
 
     private ACache mACache;
 
+    // 注意，静态变量中不要维持对 context 的引用
+    // 所引用的成员在不用时也要尽早释放
     private static UserManager mInstance;
 
     public static UserManager getInstance() {
@@ -51,6 +53,8 @@ public class UserManager {
         }
         if (mSnsJsonObj != null) {
             mUserSnsProfile = UserSnsProfile.createFromJsonObj(mSnsJsonObj);
+            // 释放引用
+            mSnsJsonObj = null;
         }
     }
 
