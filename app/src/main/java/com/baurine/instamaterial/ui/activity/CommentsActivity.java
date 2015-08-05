@@ -25,7 +25,7 @@ import com.baurine.instamaterial.utils.CommonUtils;
 
 import butterknife.InjectView;
 
-public class CommentsActivity extends BaseActivity
+public class CommentsActivity extends BaseDrawerActivity
         implements SendCommentButton.OnSendClickListener {
 
     private static final String ARG_DRAWING_START_LOCATION = "draw_start_location";

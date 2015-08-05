@@ -170,11 +170,6 @@ public class TakePhotoActivity extends BaseActivity
                 .setInterpolator(DECELERATE_INTERPOLATOR).start();
     }
 
-    @Override
-    protected boolean needDrawer() {
-        return false;
-    }
-
     private void showTakenPicture(Bitmap bitmap) {
         mVsTopPanel.showNext();
         mVsBottomPanel.showNext();

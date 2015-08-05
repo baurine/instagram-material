@@ -14,7 +14,7 @@ import com.baurine.instamaterial.ui.view.RevealBackgroundView;
 
 import butterknife.InjectView;
 
-public class UserProfileActivity extends BaseActivity
+public class UserProfileActivity extends BaseDrawerActivity
         implements RevealBackgroundView.OnStateChangeListener {
     private static final String ARG_REVEAL_START_LOCATION = "reveal_start_location";
 

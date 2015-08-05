@@ -108,11 +108,6 @@ public class PublishPhotoActivity extends BaseActivity {
     }
 
     @Override
-    protected boolean needDrawer() {
-        return false;
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_publish_photo, menu);
         return true;

@@ -23,7 +23,7 @@ import com.baurine.instamaterial.utils.CommonUtils;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity
+public class MainActivity extends BaseDrawerActivity
         implements FeedAdapter.OnFeedItemClickListener,
         FeedContextMenu.OnFeedContextMenuItemClickListener {
 

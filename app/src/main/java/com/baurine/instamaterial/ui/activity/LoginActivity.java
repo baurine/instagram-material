@@ -66,11 +66,6 @@ public class LoginActivity extends BaseActivity {
                 .start();
     }
 
-    @Override
-    protected boolean needDrawer() {
-        return false;
-    }
-
     @OnClick(R.id.btn_login_weibo)
     public void loginWithWeibo() {
         try {
