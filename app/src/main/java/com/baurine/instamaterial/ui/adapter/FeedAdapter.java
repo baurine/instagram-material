@@ -245,6 +245,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
             }
             updateLikeButton(holder, true);
             updateLikesCounter(holder, delta, true);
+            if (mListener != null && delta > 0) {
+                mListener.onLikeClick(v, position);
+            }
         } else if (id == R.id.iv_feed_center) {
             CellFeedViewHolder holder = (CellFeedViewHolder) v.getTag();
             int position = holder.getAdapterPosition();
@@ -253,6 +256,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
                 animatePhotoLike(holder);
                 updateLikeButton(holder, false);
                 updateLikesCounter(holder, 1, true);
+                if (mListener != null) {
+                    mListener.onLikeClick(v, position);
+                }
             }
         }
     }
@@ -435,6 +441,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
 
     public interface OnFeedItemClickListener {
         void onUserProfileClick(View v, int position);
+
+        void onLikeClick(View v, int position);
 
         void onCommentsClick(View v, int position);
 

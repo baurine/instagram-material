@@ -6,7 +6,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -36,6 +38,8 @@ public class MainActivity extends BaseDrawerActivity
     RecyclerView mRvFeed;
     @InjectView(R.id.fab_create)
     FloatingActionButton mFabCreate;
+    @InjectView(R.id.cl_content)
+    CoordinatorLayout mClContent;
 
     private FeedAdapter mFeedAdapter;
 
@@ -182,6 +186,11 @@ public class MainActivity extends BaseDrawerActivity
         startLocation[0] += v.getWidth() / 2;
         UserProfileActivity.startUserProfileFromLocation(startLocation, this);
         overridePendingTransition(0, 0);
+    }
+
+    @Override
+    public void onLikeClick(View v, int position) {
+        Snackbar.make(mClContent, "Liked!", Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
