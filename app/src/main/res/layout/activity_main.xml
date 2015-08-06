@@ -1,31 +1,33 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rl_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <include
-        android:id="@+id/tl_toolbar"
-        layout="@layout/view_feed_toolbar" />
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_feed"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tl_toolbar"
-        android:scrollbars="none" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/tl_toolbar"
+            layout="@layout/view_feed_toolbar" />
+
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_create"
         android:layout_width="@dimen/fab_size"
         android:layout_height="@dimen/fab_size"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|right"
         android:layout_marginBottom="@dimen/fab_margins"
         android:layout_marginRight="@dimen/fab_margins"
         android:src="@mipmap/ic_instagram_white"
         app:borderWidth="0dp" />
 
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
+
