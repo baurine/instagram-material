@@ -1,6 +1,7 @@
 package com.baurine.instamaterial.ui.adapter;
 
 import android.content.Context;
+import android.support.design.widget.TabLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
@@ -82,8 +83,10 @@ public class UserProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             view.setLayoutParams(layoutParams);
             return new ProfileHeaderViewHolder(view);
         } else if (viewType == TYPE_PROFILE_OPTIONS) {
+//            final View view = LayoutInflater.from(mContext).inflate(
+//                    R.layout.view_user_profile_options, parent, false);
             final View view = LayoutInflater.from(mContext).inflate(
-                    R.layout.view_user_profile_options, parent, false);
+                    R.layout.view_user_profile_options_tab, parent, false);
             StaggeredGridLayoutManager.LayoutParams layoutParams =
                     (StaggeredGridLayoutManager.LayoutParams) view.getLayoutParams();
             layoutParams.setFullSpan(true);
@@ -135,13 +138,22 @@ public class UserProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     private void bindProfileOptions(final ProfileOptionsViewHolder holder) {
-        holder.mLlButtons.getViewTreeObserver().addOnPreDrawListener(
+//        holder.mLlButtons.getViewTreeObserver().addOnPreDrawListener(
+//                new ViewTreeObserver.OnPreDrawListener() {
+//                    @Override
+//                    public boolean onPreDraw() {
+//                        holder.mLlButtons.getViewTreeObserver().removeOnPreDrawListener(this);
+//                        holder.mVUnderline.getLayoutParams().width = holder.mIbGrid.getWidth();
+//                        holder.mVUnderline.requestLayout();
+//                        animateProfileOptions(holder);
+//                        return false;
+//                    }
+//                });
+        holder.mTlOptions.getViewTreeObserver().addOnPreDrawListener(
                 new ViewTreeObserver.OnPreDrawListener() {
                     @Override
                     public boolean onPreDraw() {
-                        holder.mLlButtons.getViewTreeObserver().removeOnPreDrawListener(this);
-                        holder.mVUnderline.getLayoutParams().width = holder.mIbGrid.getWidth();
-                        holder.mVUnderline.requestLayout();
+                        holder.mTlOptions.getViewTreeObserver().removeOnPreDrawListener(this);
                         animateProfileOptions(holder);
                         return false;
                     }
@@ -189,15 +201,19 @@ public class UserProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private void animateProfileOptions(ProfileOptionsViewHolder holder) {
         if (!mLockedAnimation) {
-            holder.mLlButtons.setTranslationY(-holder.mLlButtons.getHeight());
-            holder.mVUnderline.setScaleX(0f);
-
-            holder.mLlButtons.animate().translationY(0).setDuration(300)
+//            holder.mLlButtons.setTranslationY(-holder.mLlButtons.getHeight());
+//            holder.mVUnderline.setScaleX(0f);
+//
+//            holder.mLlButtons.animate().translationY(0).setDuration(300)
+//                    .setStartDelay(PROFILE_OPTIONS_ANIMATION_DELAY)
+//                    .setInterpolator(INTERPOLATOR);
+//            holder.mVUnderline.animate().scaleX(1f).setDuration(200)
+//                    .setStartDelay(PROFILE_OPTIONS_ANIMATION_DELAY + 300)
+//                    .setInterpolator(INTERPOLATOR).start();
+            holder.mTlOptions.setTranslationY(-holder.mTlOptions.getHeight());
+            holder.mTlOptions.animate().translationY(0).setDuration(300)
                     .setStartDelay(PROFILE_OPTIONS_ANIMATION_DELAY)
                     .setInterpolator(INTERPOLATOR);
-            holder.mVUnderline.animate().scaleX(1f).setDuration(200)
-                    .setStartDelay(PROFILE_OPTIONS_ANIMATION_DELAY + 300)
-                    .setInterpolator(INTERPOLATOR).start();
         }
     }
 
@@ -240,22 +256,28 @@ public class UserProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     static class ProfileOptionsViewHolder extends RecyclerView.ViewHolder {
-        @InjectView(R.id.ib_grid)
-        ImageButton mIbGrid;
-        @InjectView(R.id.ib_list)
-        ImageButton mIbList;
-        @InjectView(R.id.ib_place)
-        ImageButton mIbPlace;
-        @InjectView(R.id.ib_label)
-        ImageButton mIbLabel;
-        @InjectView(R.id.v_underline)
-        View mVUnderline;
-        @InjectView(R.id.ll_buttons)
-        View mLlButtons;
+//        @InjectView(R.id.ib_grid)
+//        ImageButton mIbGrid;
+//        @InjectView(R.id.ib_list)
+//        ImageButton mIbList;
+//        @InjectView(R.id.ib_place)
+//        ImageButton mIbPlace;
+//        @InjectView(R.id.ib_label)
+//        ImageButton mIbLabel;
+//        @InjectView(R.id.v_underline)
+//        View mVUnderline;
+//        @InjectView(R.id.ll_buttons)
+//        View mLlButtons;
+        @InjectView(R.id.tl_options)
+        TabLayout mTlOptions;
 
         public ProfileOptionsViewHolder(View view) {
             super(view);
             ButterKnife.inject(this, view);
+            mTlOptions.addTab(mTlOptions.newTab().setIcon(R.mipmap.ic_grid_on_white));
+            mTlOptions.addTab(mTlOptions.newTab().setIcon(R.mipmap.ic_list_white));
+            mTlOptions.addTab(mTlOptions.newTab().setIcon(R.mipmap.ic_label_white));
+            mTlOptions.addTab(mTlOptions.newTab().setIcon(R.mipmap.ic_place_white));
         }
     }
 

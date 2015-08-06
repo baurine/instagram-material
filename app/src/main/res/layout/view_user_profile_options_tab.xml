@@ -1,0 +1,17 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tl_options"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="?attr/colorAccent"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="#5be5ad"
+        app:tabIndicatorHeight="4dp"
+        app:tabMode="fixed" />
+
+</FrameLayout>
+
