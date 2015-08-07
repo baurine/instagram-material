@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -37,6 +38,8 @@ public class MainActivity extends BaseDrawerActivity
     private static final int ANIM_DURATION_TOOLBAR = 300;
     private static final int ANIM_DURATION_FAB = 400;
 
+    @InjectView(R.id.srl_feed)
+    SwipeRefreshLayout mSrlFeed;
     @InjectView(R.id.rv_feed)
     RecyclerView mRvFeed;
     @InjectView(R.id.fab_create)
@@ -88,6 +91,7 @@ public class MainActivity extends BaseDrawerActivity
         setContentView(R.layout.activity_main);
 
         setupFeed();
+        setupRefresh();
 
         if (savedInstanceState == null) {
             mPendingIntroAnimation = true;
@@ -131,6 +135,21 @@ public class MainActivity extends BaseDrawerActivity
             }
         };
         mRvFeed.addOnScrollListener(mMyRecyclerScroll);
+    }
+
+    private void setupRefresh() {
+        mSrlFeed.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSrlFeed.setRefreshing(false);
+                        mFeedAdapter.addItem();
+                    }
+                }, 2000);
+            }
+        });
     }
 
     private void startIntroAnimation() {

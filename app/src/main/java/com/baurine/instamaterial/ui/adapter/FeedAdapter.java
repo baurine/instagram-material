@@ -83,7 +83,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CellFeedViewHo
     }
 
     public void updateItems() {
-        updateItems(10);
+        updateItems(2);
+    }
+
+    public void addItem() {
+        updateItems(mItemsCount + 1);
     }
 
     public void updateItems(int count) {
