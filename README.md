@@ -124,3 +124,19 @@ SendingPhoto
 用 weibo 登录成功后，显示 weibo 头像和名字。
 
 ![weibo_profile.jpg](apk/weibo_profile.jpg)
+
+#### 2015/8/7 Update
+
+主要是使用了 Android Support Design 库中的新控件来改进工程。包括：
+
+1. 使用 NavigationView 代替自定义 view
+2. 使用 CoordinatorLayout 和 AppBarLayout 实现滑动 RecyclerView 时，隐藏或显示 Toolbar
+3. 使用 Snackbar
+4. 使用 TabLayout 代替自定义实现
+5. 使用 CollapsingToolbarLayout
+6. 滑动 RecyclerView 时隐藏或显示 FAB
+7. 使用 SwipeRefreshLayout 实现刷新效果
+
+新的效果：
+
+![design_support.gif](apk/design_support.gif)
