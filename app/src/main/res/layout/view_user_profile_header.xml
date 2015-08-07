@@ -56,8 +56,8 @@
                 android:id="@+id/btn_follow"
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
-                android:layout_marginRight="24dp"
                 android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/btn_following"
                 android:text="following"
@@ -146,8 +146,6 @@
 
         </LinearLayout>
 
-
     </LinearLayout>
-
 
 </LinearLayout>

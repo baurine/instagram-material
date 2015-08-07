@@ -1,14 +1,9 @@
 package com.baurine.instamaterial.ui.activity;
 
 import android.os.Handler;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,16 +12,11 @@ import android.widget.TextView;
 import com.baurine.instamaterial.R;
 import com.baurine.instamaterial.data.UserSnsProfile;
 import com.baurine.instamaterial.manager.UserManager;
-import com.baurine.instamaterial.ui.manager.DrawerLayoutInstaller;
 import com.baurine.instamaterial.ui.view.CircleTransformation;
-import com.baurine.instamaterial.ui.view.DrawerMenuView;
-import com.baurine.instamaterial.utils.CommonUtils;
 import com.squareup.picasso.Picasso;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import butterknife.Optional;
 
 public class BaseDrawerActivity extends BaseActivity {
 
@@ -92,7 +82,8 @@ public class BaseDrawerActivity extends BaseActivity {
                 int[] startLocation = new int[2];
                 view.getLocationOnScreen(startLocation);
                 startLocation[0] += view.getWidth() / 2;
-                UserProfileActivity.startUserProfileFromLocation(startLocation, BaseDrawerActivity.this);
+                // UserProfileActivity.startUserProfileFromLocation(startLocation, BaseDrawerActivity.this);
+                UserProfileCoordinatorActivity.startUserProfileFromLocation(startLocation, BaseDrawerActivity.this);
                 overridePendingTransition(0, 0);
             }
         }, 200);

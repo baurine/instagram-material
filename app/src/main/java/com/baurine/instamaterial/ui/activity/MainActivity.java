@@ -184,7 +184,7 @@ public class MainActivity extends BaseDrawerActivity
         int[] startLocation = new int[2];
         v.getLocationOnScreen(startLocation);
         startLocation[0] += v.getWidth() / 2;
-        UserProfileActivity.startUserProfileFromLocation(startLocation, this);
+        UserProfileCoordinatorActivity.startUserProfileFromLocation(startLocation, this);
         overridePendingTransition(0, 0);
     }
 
