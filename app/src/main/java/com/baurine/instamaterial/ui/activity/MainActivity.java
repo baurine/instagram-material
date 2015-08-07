@@ -14,6 +14,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 
 import com.baurine.instamaterial.R;
@@ -21,6 +23,7 @@ import com.baurine.instamaterial.ui.adapter.FeedAdapter;
 import com.baurine.instamaterial.ui.manager.FeedContextMenuManager;
 import com.baurine.instamaterial.ui.view.FeedContextMenu;
 import com.baurine.instamaterial.utils.CommonUtils;
+import com.baurine.instamaterial.utils.MyRecyclerScroll;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -44,6 +47,8 @@ public class MainActivity extends BaseDrawerActivity
     private FeedAdapter mFeedAdapter;
 
     private boolean mPendingIntroAnimation = false;
+
+    private MyRecyclerScroll mMyRecyclerScroll;
 
     public static void bringToTopForPublishingPhoto(Activity startingActivity) {
         Intent intent = new Intent(startingActivity, MainActivity.class);
@@ -107,6 +112,25 @@ public class MainActivity extends BaseDrawerActivity
                 FeedContextMenuManager.getInstance().onScrolled(recyclerView, dx, dy);
             }
         });
+
+        mMyRecyclerScroll = new MyRecyclerScroll() {
+            @Override
+            protected void hide() {
+                mFabCreate.animate()
+                        .translationY(2 * mFabCreate.getHeight())
+                        .setInterpolator(new AccelerateInterpolator(2f))
+                        .start();
+            }
+
+            @Override
+            protected void show() {
+                mFabCreate.animate()
+                        .translationY(0)
+                        .setInterpolator(new DecelerateInterpolator(2f))
+                        .start();
+            }
+        };
+        mRvFeed.addOnScrollListener(mMyRecyclerScroll);
     }
 
     private void startIntroAnimation() {
@@ -191,6 +215,8 @@ public class MainActivity extends BaseDrawerActivity
     @Override
     public void onLikeClick(View v, int position) {
         Snackbar.make(mClContent, "Liked!", Snackbar.LENGTH_SHORT).show();
+        // Snackbar 显示时，会把之前隐藏的 fab 也重新显示，所以要 reset fab 的内部状态
+        mMyRecyclerScroll.reset();
     }
 
     @Override
