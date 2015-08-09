@@ -34,8 +34,9 @@ public class BaseDrawerActivity extends BaseActivity {
     }
 
     protected void setupToolbar() {
-        super.setupToolbar();
         if (getToolbar() != null) {
+            setSupportActionBar(mToolbar);
+            getToolbar().setNavigationIcon(R.mipmap.ic_menu_white);
             getToolbar().setNavigationOnClickListener(
                     new View.OnClickListener() {
                         @Override

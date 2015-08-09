@@ -20,7 +20,7 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.InjectView;
 
-public class UserProfileCoordinatorActivity extends BaseDrawerActivity
+public class UserProfileCoordinatorActivity extends BaseActivity
         implements RevealBackgroundView.OnStateChangeListener {
     private static final String ARG_REVEAL_START_LOCATION = "reveal_start_location";
     private static final int PROFILE_OPTIONS_ANIMATION_DELAY = 300;

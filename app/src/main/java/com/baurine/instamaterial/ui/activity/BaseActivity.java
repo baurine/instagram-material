@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.baurine.instamaterial.R;
@@ -41,7 +42,15 @@ public class BaseActivity extends AppCompatActivity {
     protected void setupToolbar() {
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
-            mToolbar.setNavigationIcon(R.mipmap.ic_menu_white);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getToolbar().setNavigationOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            onBackPressed();
+                        }
+                    }
+            );
         }
     }
 
