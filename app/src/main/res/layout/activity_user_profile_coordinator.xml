@@ -1,13 +1,14 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
     android:id="@+id/rl_root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.baurine.instamaterial.ui.view.RevealBackgroundView
         android:id="@+id/rbv_background"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -17,12 +18,11 @@
             android:id="@+id/rv_user_profile"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <android.support.design.widget.CollapsingToolbarLayout
@@ -35,7 +35,7 @@
                     android:id="@+id/ll_user_profile_root"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="?attr/colorPrimary"
+                    android:background="@color/style_color_primary"
                     android:clipChildren="false"
                     android:clipToPadding="false"
                     android:orientation="vertical"
@@ -56,7 +56,7 @@
                             android:layout_height="@dimen/user_profile_avatar_size"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="16dp"
-                            android:src="@mipmap/ic_launcher" />
+                            android:src="@mipmap/ic_launcher"/>
 
                         <LinearLayout
                             android:id="@+id/ll_user_profile_detail"
@@ -71,7 +71,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Baurine Huang"
                                 android:textColor="#ffffff"
-                                android:textSize="24sp" />
+                                android:textSize="24sp"/>
 
                             <TextView
                                 android:id="@+id/tv_user_profile_id_name"
@@ -79,7 +79,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="\@baurine"
                                 android:textColor="#bbbbbb"
-                                android:textSize="12sp" />
+                                android:textSize="12sp"/>
 
                             <TextView
                                 android:id="@+id/tv_user_profile_about"
@@ -87,7 +87,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="work hard, enjoy life."
                                 android:textColor="#ffffff"
-                                android:textSize="12sp" />
+                                android:textSize="12sp"/>
 
                             <Button
                                 android:id="@+id/btn_follow"
@@ -99,7 +99,7 @@
                                 android:background="@drawable/btn_following"
                                 android:text="following"
                                 android:textColor="#ffffff"
-                                android:textSize="12sp" />
+                                android:textSize="12sp"/>
 
                         </LinearLayout>
 
@@ -126,14 +126,14 @@
                                 android:layout_height="wrap_content"
                                 android:text="1167"
                                 android:textColor="#ffffff"
-                                android:textSize="20sp" />
+                                android:textSize="20sp"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="posts"
                                 android:textColor="#ffffff"
-                                android:textSize="12sp" />
+                                android:textSize="12sp"/>
 
                         </LinearLayout>
 
@@ -149,14 +149,14 @@
                                 android:layout_height="wrap_content"
                                 android:text="396"
                                 android:textColor="#ffffff"
-                                android:textSize="20sp" />
+                                android:textSize="20sp"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="followers"
                                 android:textColor="#ffffff"
-                                android:textSize="12sp" />
+                                android:textSize="12sp"/>
 
                         </LinearLayout>
 
@@ -172,14 +172,14 @@
                                 android:layout_height="wrap_content"
                                 android:text="485"
                                 android:textColor="#ffffff"
-                                android:textSize="20sp" />
+                                android:textSize="20sp"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="following"
                                 android:textColor="#ffffff"
-                                android:textSize="12sp" />
+                                android:textSize="12sp"/>
 
                         </LinearLayout>
 
@@ -191,11 +191,11 @@
                     android:id="@+id/tl_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="?attr/colorPrimary"
+                    android:background="@color/style_color_primary"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                     app:elevation="@dimen/default_elevation"
                     app:layout_collapseMode="pin"
-                    app:layout_scrollFlags="scroll|enterAlways"
-                    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+                    app:layout_scrollFlags="scroll|enterAlways">
 
                     <ImageView
                         android:id="@+id/iv_logo"
@@ -203,7 +203,7 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:scaleType="center"
-                        android:src="@mipmap/img_toolbar_logo" />
+                        android:src="@mipmap/img_toolbar_logo"/>
 
                 </android.support.v7.widget.Toolbar>
 
@@ -221,7 +221,7 @@
                     app:tabGravity="fill"
                     app:tabIndicatorColor="#5be5ad"
                     app:tabIndicatorHeight="4dp"
-                    app:tabMode="fixed" />
+                    app:tabMode="fixed"/>
 
             </FrameLayout>
 
