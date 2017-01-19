@@ -22,9 +22,8 @@
 
 项目中用到的图片资源皆来自作者项目及[花瓣网](http://huaban.com/)，如有侵权本人会马上删除。
 
-接下来的计划，我想在这个项目的 UI 基础上，尝试使用 [LeanCloud SDK](https://leancloud.cn/) 来实现真正的功能，包括登录，发布照片，点赞，评论，关注等，并仿照作者写成一系列的教程，敬请期待。
-
 #### 截图
+
 Feeds
 
 ![01_feeds](apk/01_feeds.jpg)
@@ -58,6 +57,7 @@ SendingPhoto
 ![08_sending_photo](apk/08_sending_photo.jpg)
 
 #### MX 上按钮异常的解决办法
+
 拍照按钮异常 (正常的情况看上面的截图)
 
 ![abnormal_01](apk/abnormal_01.jpg)
@@ -113,11 +113,10 @@ SendingPhoto
 
 -----------
 
-开始用 LeanCloud SDK 来实现功能。
 
 #### 用 weibo 登录
 
-登录界面 (加了些动画效果)。
+用 LeanCloud SDK 实现微博登录功能，登录界面 (加了些动画效果)。
 
 ![login.jpg](apk/login.jpg)
 
